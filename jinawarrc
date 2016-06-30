@@ -1,0 +1,17 @@
+[global]
+ldap_ip = ldap.ncbs.res.in
+ldap_port = 389
+base_url = http://ghevar.ncbs.res.in/jinawar
+
+; Cage configuration.
+[cage]
+type[]=breeder
+type[]=normal
+
+; Animal configuration.
+[animal]
+strain[] = CRE
+strain[] = G5.17
+strain[] = G4.3
+strain[] = CaMKII
+strain[] = Thy
