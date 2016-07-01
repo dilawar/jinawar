@@ -1,7 +1,8 @@
 [global]
 ldap_ip = ldap.ncbs.res.in
 ldap_port = 389
-base_url = http://ghevar.ncbs.res.in/jinawar
+; base_url = http://ghevar.ncbs.res.in/jinawar
+base_url = http://localhost/jinawar
 
 ; Cage configuration.
 [cage]

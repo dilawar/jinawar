@@ -93,8 +93,11 @@ table.history
 }
 
 #table_login_main
-{   text-align : left; background-color:#FFFBBB; width : 200px; 
-    position:relative; left : 300px;
+{   text-align : left;
+    background-color:#FFFBBB; 
+    width : 200px; 
+    left : 300px;
+    position:fixed; 
 }
 
 #table_login_temp
@@ -106,7 +109,6 @@ table.history
 
 #table_info {
     text-align:left;
-    position:relative;
     bottom : 185px;
     font-size:10px;
     width: 240px;

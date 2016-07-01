@@ -81,5 +81,27 @@ function get_list_of_cages( $type )
     return $array;
 }
 
+function summaryTable( )
+{
+    $html = "<table id=\"table_info\" style=\"float: left\">";
+    $dbname  = $_SESSION['db_unmutable'];
+    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
+    $res = $conn->query( "SELECT DISTINCT id FROM animals WHERE status='alive'" );
+    $numAnimals = 0;
+    while( $arr = $res->fetchArray( ) )
+        $numAnimals += 1;
+
+    $res = $conn->query( "SELECT DISTINCT id FROM cages" );
+    $numCages = 0;
+    while( $arr = $res->fetchArray( ) )
+        $numCages += 1;
+
+    $conn->close();
+    $html .= "<tr> <td>No of animals </td><td> $numAnimals </td> </tr>";
+    $html .= "<tr> <td>No of cages </td><td> $numCages </td> </tr>";
+    $html .= "</table>";
+    return $html;
+}
+
 ?>
 

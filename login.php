@@ -18,9 +18,10 @@ if(!$conn)
 }
 else 
 {
+    echo "<p> Login successful </p>";
     imap_close( $conn );
     $_SESSION['AUTHENTICATED'] = TRUE;
-    goToPage( "user.php", 1 );
+    goToPage( "user.php", 0 );
 }
 
 ?>

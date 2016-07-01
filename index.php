@@ -34,17 +34,9 @@ file_put_contents('count.txt', $hit_count);
 ?>
 
 <font size="3" color="black">
-<h3>Authentication </h3>
-<p> We do not store your password. Your LDAP information is is sent to 
-email-server for authentication. </p>
-
-<?php /* Table : Login using ldap.  */ ?>
-<?php echo loginTable(); ?>
-
-<!-- TODO: Display summary here -->
-
-<h5> Known issues </h5>
-<h5> News and updates </h5>
-<?php 
-echo "</body></html>";
+<?php
+    echo summaryTable( );
+    echo loginForm(); 
 ?>
+
+</body></html>

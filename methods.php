@@ -50,7 +50,7 @@ function cageIdsToHtml( $type = "breeder", $default = NULL )
 function animalListToHtml( $animals )
 {
     $html = "<select name=\"animal_id\"> 
-        <option disabled selected value> -- select an option -- </option>"
+        <option disabled selected value> -- select an animal -- </option>"
         ;
     foreach( $animals as $anim )
     {
@@ -59,6 +59,19 @@ function animalListToHtml( $animals )
     }
 
     $html .= "</select>";
+    return $html;
+}
+
+function animalsToDataList( $animals )
+{
+    $html = "<datalist id=\"animal_list\">";
+    foreach( $animals as $anim )
+    {
+        $text = $anim['id'] . ' ' . $anim['name'];
+        $html .= '<option value="' . $anim['id'] . '">' . $text . '</option>';
+    }
+
+    $html .= "</datalist>";
     return $html;
 }
 

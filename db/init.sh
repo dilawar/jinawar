@@ -19,6 +19,6 @@
 
 set -o nounset                              # Treat unset variables as an error
 python ./init_db.py 
-sudo chown -c -R dilawars:www-data *.sqlite
+sudo chown -c -R dilawars:www *.sqlite 
 sudo chmod g+w *.sqlite
 

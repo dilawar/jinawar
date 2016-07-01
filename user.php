@@ -23,15 +23,22 @@ include_once( "methods.php" );
     </td>
   </tr>
   <tr>
-    <td>Edit/Update Animal</td>
-    <td>
-        <form method="post" action="edit_animal.php">
+    <td valign="top">
             <?php $animals = getAnimalList( ); 
-                echo animalListToHtml( $animals );
-            ?>
-            <input type="submit" name="response" value="Edit" >
+                echo animalsToDataList( $animals );
+            ?> Animal 
+            <input list="animal_list" name="animals" >
+    </td>
+    <td>
+        <form method="post" action="edit_animal.php" id="form_edit_animnal">
+        <input type="submit"  name="response" value="Assign/Change cage" >
+        <br>
+        <input type="submit"  name="response" value="Update health" >
+        <br>
+        <input type="submit"  name="response" value="Record genotype" >
         </form>
     </td>
+    
   </tr>
 </table> 
 
