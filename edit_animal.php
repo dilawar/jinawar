@@ -5,9 +5,40 @@ include_once( 'sqlite.php' );
 include_once( 'error.php' );
 include_once( 'header.php' );
 
-var_dump( $_POST );
-$animal = getAnimalWithId( $_POST['animal_id'] );
-$strain = $animal['strain'];
+/* If there is not animal then go back */
+
+function change( $animal, $what )
+{
+    $html = "<h3>Changing animal cage ...</h3>";
+
+    if( $what == "cage" )
+        $oldval = __get__( $animal, 'currnet_cage_id', 'Unassigned' );
+    else if( $what ==  'strain' ) 
+        $oldval = __get__( $animal, 'strain', 'Unassigned' );
+    else
+        $oldval = 'Unassigned';
+
+    $html .= "Old $what <font color=\"blue\">" .  $oldval . "</font><br>";
+    $html .= "<table id=\"table_input1\">";
+    $html .= "<tr><td> New $what </td>";
+
+    if( $what == "cage" )
+        $html .= "<td>" . cageIdsToHtml( NULL ) . "</td>";
+
+    if( $what == "genotype" )
+        $html .= "<td>" . strainsToHtml( ) . "</td>";
+
+    $html .= '<td><input type="submit" name="update" value="Update ' . $what. '"></td></tr>';
+    $html .= "</table>";
+    $html .= '<input type="hidden" name="animal_id" value="' . $animal['id'] . '" />';
+    return $html;
+}
+
+if( $_POST && $_POST[ 'animal_id']  )
+{
+
+    $animal = getAnimalWithId( $_POST['animal_id'] );
+    $strain = $animal['strain'];
 
 ?>
 
@@ -15,7 +46,7 @@ $strain = $animal['strain'];
 
 <table id="table_input" >
 
-<form method="post" action="insert_animal_action.php" id="form_insert_animal" >
+<form method="post" action="edit_animal_action.php" id="form_insert_animal" >
 <table  id = "table_input" >
 <tr>
     <td>ID of the animal </td>
@@ -44,50 +75,28 @@ $strain = $animal['strain'];
 <tr>
 </table>
 
-<!-- Conditional update -->
-
 <?php
-
-function change( $animal, $what )
-{
-    $html = "<h3>Changing animal cage ...</h3>";
-    if( $what == "cage" )
-    {
-        if( array_key_exists('current_cage_id', $animal ) )
-            $oldval = $animal['current_cage_id'];
-        else
-            $oldval = 'Unassigned';
-    }
-
-    $html .= "Old $what  <font color=\"blue\">" .  $oldval . "</font><br>";
-    $html .= "<table id=\"table_input1\">";
-    $html .= "<tr><td> New $what </td>";
-
-    if( $what == "cage" )
-        $html .= "<td>" . cageIdsToHtml( NULL ) . "</td>";
-
-    $html .= '<td><input type="submit" name="insert" value="Insert"></td></tr>';
-    $html .= "</table>";
-    return $html;
-}
-
 ?>
 
 <form action="edit_animal_action.php">
 
 <?php
 
-switch( $_POST['response'] )
-{
+    switch( trim($_POST['response']) )
+    {
 
-case "Assign/Change cage":
-    echo change( $animal, "cage" );
-    break;
+    case "Assign/Change cage":
+        echo change( $animal, "cage" );
+        break;
 
-default:
-    break;
+    case "Record genotype":
+        echo change( $animal, "genotype" );
 
-}
+    default:
+        echo printWarning( "Unsupported/unimplemented response " . $_POST["response"] );
+        break;
+
+    }
 ?>
 </form>
 
@@ -95,3 +104,12 @@ default:
 <input class="logout" type="submit" name="goback" value="Go Back">
 </form>
 
+<?php
+}
+else
+{
+    echo printInfo( "You did not select any animal");
+    echo goBackToPageLink( "user.php" );
+}
+
+?>

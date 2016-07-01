@@ -9,6 +9,9 @@ function sqlite_open($location)
 
 function getAnimalWithId( $id )
 {
+    if( ! $id )
+        return NULL;
+
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
     $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );

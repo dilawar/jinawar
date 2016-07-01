@@ -9,7 +9,7 @@ date_default_timezone_set('Asia/Kolkata');
     *
     * @return  A html SELECT list.
  */
-function getListOfStrains( $selected_strain = NULL )
+function strainsToHtml( $selected_strain = NULL )
 {
     if( ! $selected_strain )
         $html = "<select name=\"animal_strain\"> 
@@ -32,11 +32,11 @@ function getListOfStrains( $selected_strain = NULL )
 function cageIdsToHtml( $type = "breeder", $default = NULL )
 {
     if( ! $default )
-        $html = "<select name=\"cage\"> 
+        $html = "<select name=\"cage_id\"> 
             <option disabled selected value> -- select a cage -- </option>"
             ;
     else
-        $html = "<select name=\"cage\">";
+        $html = "<select name=\"cage_id\">";
 
     $cages = getListOfCages( $type );
     foreach( $cages as $cage )
@@ -94,5 +94,20 @@ function goToPage($page="index.php", $delay = 3)
   $url = $conf['global']['base_url']."/".$page;
   header("Refresh: $delay, url=$url");
 }
+
+function goBackToPageLink( $url )
+{
+    $html = "<a href=\"$url\"><font color=\"blue\">Go back</font></a>";
+    return $html;
+}
+
+function __get__( $arr, $what, $default = NULL )
+{
+    if( array_key_exists( $what, $arr ) )
+        return $arr[$what];
+    else
+        return $default;
+}
+
 
 ?>

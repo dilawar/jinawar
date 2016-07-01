@@ -28,7 +28,7 @@ include_once( 'methods.php' );
 </tr>
 <tr>
     <td>Strain</td>
-    <td>  <?php echo getListOfStrains( ) ?> </td>
+    <td>  <?php echo strainsToHtml( ) ?> </td>
 </tr>
 <tr>
     <td>Cage ID<br><small>Animal was born in this cage</small></td> 
