@@ -33,16 +33,17 @@ function cageIdsToHtml( $type = "breeder", $default = NULL )
 {
     if( ! $default )
         $html = "<select name=\"cage\"> 
-            <option disabled selected value> -- select an option -- </option>"
+            <option disabled selected value> -- select a cage -- </option>"
             ;
     else
         $html = "<select name=\"cage\">";
 
-    $cages = get_list_of_cages( $type );
-
-    foreach( $cages as $id )
-        $html .= '<option value="'.$id.'">' . ($id) . '</option>';
-
+    $cages = getListOfCages( $type );
+    foreach( $cages as $cage )
+    {
+        $html .= '<option value="'.$cage['id'].'">' . $cage['id'] . 
+           " (" . $cage['type'] . ")" . '</option>';
+    }
     $html .= "</select>";
     return $html;
 }

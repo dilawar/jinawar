@@ -13,7 +13,14 @@ function getAnimalWithId( $id )
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
     $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );
     $arr = $res->fetchArray( SQLITE3_ASSOC );
+
+    $res = $conn->query( 'SELECT * FROM current_status WHERE id=' . $id );
+    $arr1 = $res->fetchArray( SQLITE3_ASSOC );
+
     $conn->close();
+
+    if( $arr1 )
+        $arr = array_merge( $arr + $arr1 );
     return $arr;
 }
 
@@ -58,7 +65,7 @@ function getAnimalList( )
     *
     * @return 
  */
-function get_list_of_cages( $type )
+function getListOfCages( $type = NULL )
 {
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "failed to open $dbname" );
@@ -66,14 +73,14 @@ function get_list_of_cages( $type )
     if( $conn )
     {
         if( $type )
-            $res = $conn->query( 'SELECT DISTINCT id FROM cages WHERE type="'. $type . '"' );
+            $res = $conn->query( 'SELECT * FROM cages WHERE type="'. $type . '"' );
         else
-            $res = $conn->query( 'SELECT DISTINCT id FROM cages' );
+            $res = $conn->query( 'SELECT * FROM cages' );
 
         $i = 0;
-        while( $row = $res->fetchArray( SQLITE3_NUM ) )
+        while( $row = $res->fetchArray( SQLITE3_ASSOC ) )
         {
-            $array[$i] = $row[0];
+            $array[$i] = $row;
             $i++;
         }
         $conn->close();
@@ -84,21 +91,15 @@ function get_list_of_cages( $type )
 function summaryTable( )
 {
     $html = "<table id=\"table_info\" style=\"float: left\">";
-    $dbname  = $_SESSION['db_unmutable'];
-    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $res = $conn->query( "SELECT DISTINCT id FROM animals WHERE status='alive'" );
-    $numAnimals = 0;
-    while( $arr = $res->fetchArray( ) )
-        $numAnimals += 1;
-
-    $res = $conn->query( "SELECT DISTINCT id FROM cages" );
-    $numCages = 0;
-    while( $arr = $res->fetchArray( ) )
-        $numCages += 1;
-
-    $conn->close();
+    $animals = getAnimalList( );
+    $breederCages = getListOfCages( "breeder" );
+    $cages = getListOfCages( );
+    $numAnimals = sizeof( $breederCages );
+    $numCages = sizeof( $cages );
+    $numBreederCages = sizeof( $breederCages );
     $html .= "<tr> <td>No of animals </td><td> $numAnimals </td> </tr>";
-    $html .= "<tr> <td>No of cages </td><td> $numCages </td> </tr>";
+    $html .= "<tr> <td>No of all cages </td><td> $numCages </td> </tr>";
+    $html .= "<tr> <td>No of breeder cages </td><td> $numBreederCages </td> </tr>";
     $html .= "</table>";
     return $html;
 }

@@ -32,6 +32,7 @@ function insert_animal( $vars )
     $stmt->bindValue( ':strain', $vars['animal_strain'], SQLITE3_BLOB );
     $stmt->bindValue( ':comment', $vars['animal_comment'], SQLITE3_TEXT );
     $result = $stmt->execute( );
+    
     return $result;
 };
 
@@ -40,7 +41,7 @@ $res = insert_animal( $_POST );
 if( ! $res )
 {
     echo printWarning( "Failed to insert animal " . $_POST['animal_id'] );
-    var_dump( $_POST );
+    echo( implode($_POST) );
     echo '<a href="'. $_SESSION['conf']['global']['base_url'] . '/insert_animal.php">Go back</a>';
 }
 else

@@ -20,6 +20,7 @@ add_tables_to_jinawar	db/init_db.py	/^def add_tables_to_jinawar( db ):$/;"	f
 alt	html2text.php	/^	if( $element->hasAttribute('alt') && ( $alt = html2text_cleanspace($element->getAttribute('alt')) ) ) {$/;"	v
 animal	edit_animal.php	/^$animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
 animalListToHtml	methods.php	/^function animalListToHtml( $animals )$/;"	f
+animals	sqlite.php	/^    $animals = getAnimalList( );$/;"	v
 animals	user.php	/^            <?php $animals = getAnimalList( ); $/;"	v
 animalsToDataList	methods.php	/^function animalsToDataList( $animals )$/;"	f
 arg1	mail.php	/^	$arg1=" -e \\"set smtp_url=\\"smtp:\/\/sandesh.ee.iitb.ac.in:25\\"\\"";$/;"	v
@@ -28,17 +29,24 @@ arg3	mail.php	/^	$arg3=" -e \\"set realname=\\"EE-Minion\\"\\"";$/;"	v
 arg4	mail.php	/^	$arg4=" -e \\"set content_type=text\/html\\"";$/;"	v
 arg5	mail.php	/^	$arg5=" '$to' 2>&1";$/;"	v
 arr	sqlite.php	/^          $arr = $res->fetchArray();$/;"	v
+arr	sqlite.php	/^        $arr = array_merge( $arr + $arr1 );$/;"	v
 arr	sqlite.php	/^    $arr = $res->fetchArray( SQLITE3_ASSOC );$/;"	v
 arr	sqlite.php	/^    while( $arr = $response->fetchArray( SQLITE3_BOTH ) )$/;"	v
+arr1	sqlite.php	/^    $arr1 = $res->fetchArray( SQLITE3_ASSOC );$/;"	v
 array	sqlite.php	/^    $array = Array();$/;"	v
 base	html2text.php	/^	$base = $element->ownerDocument->h2t_base;$/;"	v
 base_dn	ldap.php	/^    $base_dn = 'dc=ncbs,dc=res,dc=in';$/;"	v
 base_url	history.php	/^$base_url = $init['base_url'];$/;"	v
+breederCages	sqlite.php	/^    $breederCages = getListOfCages( "breeder" );$/;"	v
+cageId	edit_animal.php	/^        $cageId = $animal['current_cage_id'];$/;"	v
+cageId	edit_animal.php	/^        $cageId = 'Unassigned';$/;"	v
 cageIdsToHtml	methods.php	/^function cageIdsToHtml( $type = "breeder", $default = NULL )$/;"	f
 cage_types_to_html	insert_cage.php	/^function cage_types_to_html( )$/;"	f
-cages	methods.php	/^    $cages = get_list_of_cages( $type );$/;"	v
+cages	methods.php	/^    $cages = getListOfCages( $type );$/;"	v
+cages	sqlite.php	/^    $cages = getListOfCages( );$/;"	v
 calls	html2text.php	/^	\/\/flags - it would be possible to pass flags between recursive function calls, or use references, but this is easier$/;"	f
 cat	print.php	/^	$cat = $data['category'];$/;"	v
+changeCage	edit_animal.php	/^function changeCage( $animal )$/;"	f
 characters	methods.php	/^    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";$/;"	v
 cite	html2text.php	/^	if( $element->hasAttribute('cite') && ( $cite = html2text_resolve($element->getAttribute('cite'),$element) ) ) {$/;"	v
 cmd	mail.php	/^	$cmd="echo '$msg' | mutt -s '$sub' -e 'set copy=no'";$/;"	v
@@ -64,7 +72,6 @@ db	final.php	/^$db = "ta".$this_sem;$/;"	v
 db	sqlite.php	/^  $db = new SQLite3($location);$/;"	v
 dbname	insert_animal_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbname	insert_cage_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
-dbname	sqlite.php	/^    $dbname  = $_SESSION['db_unmutable'];$/;"	v
 dbname	sqlite.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbnames_	db/init_db.py	/^dbnames_ = [ 'jinawar.sqlite' ]$/;"	v
 delay	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	v
@@ -87,9 +94,9 @@ generateRandomString	methods.php	/^function generateRandomString($length = 10) $
 getAnimalList	sqlite.php	/^function getAnimalList( )$/;"	f
 getAnimalWithId	sqlite.php	/^function getAnimalWithId( $id )$/;"	f
 getInfoForDisplay	sqlite.php	/^function getInfoForDisplay()$/;"	f
+getListOfCages	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	f
 getListOfStrains	methods.php	/^function getListOfStrains( $selected_strain = NULL )$/;"	f
 getUserInfoFromLdap	ldap.php	/^function getUserInfoFromLdap($ldap_ip="ldap.ncbs.res.in", $ldap)$/;"	f
-get_list_of_cages	sqlite.php	/^function get_list_of_cages( $type )$/;"	f
 goToPage	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	f
 gradMonth	print.php	/^	$gradMonth = $data['gradSem'];$/;"	v
 gradYear	print.php	/^	$gradYear = $data['gradYear'];$/;"	v
@@ -97,13 +104,14 @@ history	final.php	/^$history = getHistoryOfPrevTwoSem($this_sem, $ldap);$/;"	v
 hit_count	index.php	/^$hit_count = (int)file_get_contents('count.txt');$/;"	v
 href	html2text.php	/^			$href = preg_replace("\/^\\.\\.\\\/\/u",'',$href);$/;"	v
 href	html2text.php	/^	if( $element->hasAttribute('href') && ( $href = html2text_resolve($element->getAttribute('href'),$element) ) ) {$/;"	v
+html	edit_animal.php	/^    $html = "<p> Old cage: " .  $cageId . " <\/p>";$/;"	v
 html	methods.php	/^        $html = "<select name=\\"animal_strain\\"> $/;"	v
 html	methods.php	/^        $html = "<select name=\\"animal_strain\\">"; $/;"	v
 html	methods.php	/^        $html = "<select name=\\"cage\\"> $/;"	v
 html	methods.php	/^        $html = "<select name=\\"cage\\">";$/;"	v
 html	methods.php	/^    $html = "<datalist id=\\"animal_list\\">";$/;"	v
 html	methods.php	/^    $html = "<select name=\\"animal_id\\"> $/;"	v
-html	sqlite.php	/^    $html = "<table style=\\"float: left\\">";$/;"	v
+html	sqlite.php	/^    $html = "<table id=\\"table_info\\" style=\\"float: left\\">";$/;"	v
 html2text	html2text.php	/^function html2text( $sourceStr, $isXML = false, $isfile = false ) {$/;"	f
 html2text_before_area	html2text.php	/^function html2text_before_area($element,$index) {$/;"	f
 html2text_before_base	html2text.php	/^function html2text_before_base($element,$index) {$/;"	f
@@ -145,8 +153,10 @@ msg	mail.php	/^	$msg = html2text($msg);$/;"	v
 name	ldap.php	/^        $name = $info[$i]["givenname"][0];$/;"	v
 name	print.php	/^	$name = $course['name'];$/;"	v
 node	html2text.php	/^		$node = $element->childNodes->item($i);$/;"	v
+numAnimals	sqlite.php	/^    $numAnimals = sizeof( $breederCages );$/;"	v
+numBreederCages	sqlite.php	/^    $numBreederCages = sizeof( $breederCages );$/;"	v
+numCages	sqlite.php	/^    $numCages = sizeof( $cages );$/;"	v
 num_child	html2text.php	/^	$num_child = $element->childNodes->length;$/;"	v
-num_colums	sqlite.php	/^    $num_colums = $res->numColumns( );$/;"	v
 output	html2text.php	/^	$output = '';$/;"	v
 pCourse	final.php	/^$pCourse = $history[0]['job'];$/;"	v
 parent_node	html2text.php	/^		$parent_node = $parent_node->parentNode;$/;"	v
@@ -182,8 +192,8 @@ res	insert_cage_action.php	/^$res = insert_cage( $_POST );$/;"	v
 res	sqlite.php	/^            $res = $conn->query( 'SELECT DISTINCT id FROM cages WHERE type="'. $type . '"' );$/;"	v
 res	sqlite.php	/^            $res = $conn->query( 'SELECT DISTINCT id FROM cages' );$/;"	v
 res	sqlite.php	/^      $res = $conn->query("SELECT Count(*) FROM mice");$/;"	v
-res	sqlite.php	/^    $res = $conn->query( "SELECT DISTINCT id FROM animals WHERE status='alive'" );$/;"	v
 res	sqlite.php	/^    $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );$/;"	v
+res	sqlite.php	/^    $res = $conn->query( 'SELECT * FROM current_status WHERE id=' . $id );$/;"	v
 response	sqlite.php	/^    $response = $conn->query( 'SELECT id, name FROM animals' );$/;"	v
 result	insert_animal_action.php	/^    $result = $stmt->execute( );$/;"	v
 result	insert_cage_action.php	/^    $result = $stmt->execute( );$/;"	v
@@ -219,6 +229,7 @@ this_sem	history.php	/^$this_sem = $_SESSION['sem'];$/;"	v
 to	mail.php	/^	$to = $ldap."@iitb.ac.in";$/;"	v
 type	insert_animal.php	/^    <td> <?php echo cageIdsToHtml( $type = "breeder" ); ?> <\/td>$/;"	v
 type	methods.php	/^function cageIdsToHtml( $type = "breeder", $default = NULL )$/;"	v
+type	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	v
 uid	ldap.php	/^        $uid = $info[$i]["uid"][0];$/;"	v
 url	methods.php	/^  $url = $conf['global']['base_url']."\/".$page;$/;"	v
 vars	insert_animal_action.php	/^    $vars = array_map( 'trim', $vars );$/;"	v

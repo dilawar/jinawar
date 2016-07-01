@@ -44,7 +44,7 @@ else
 {
     echo printWarning( "Failed to insert cage" );
     echo $res;
-    echo "<a href=\"jinawar/insert_cage.php\">Go back</a>";
+    echo "<a href=\"insert_cage.php\">Go back</a>";
 }
 
 ?>
