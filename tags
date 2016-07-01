@@ -10,6 +10,7 @@ __author__	db/init_db.py	/^__author__           = "Dilawar Singh"$/;"	v
 __copyright__	db/init_db.py	/^__copyright__        = "Copyright 2016, Dilawar Singh"$/;"	v
 __credits__	db/init_db.py	/^__credits__          = ["NCBS Bangalore"]$/;"	v
 __email__	db/init_db.py	/^__email__            = "dilawars@ncbs.res.in"$/;"	v
+__get__	methods.php	/^function __get__( $arr, $what, $default = NULL )$/;"	f
 __license__	db/init_db.py	/^__license__          = "GNU GPL"$/;"	v
 __maintainer__	db/init_db.py	/^__maintainer__       = "Dilawar Singh"$/;"	v
 __status__	db/init_db.py	/^__status__           = "Development"$/;"	v
@@ -18,7 +19,7 @@ action	html2text.php	/^	if( $element->hasAttribute('action') && ( $action = html
 add_tables	db/init_db.py	/^def add_tables( db ):$/;"	f
 add_tables_to_jinawar	db/init_db.py	/^def add_tables_to_jinawar( db ):$/;"	f
 alt	html2text.php	/^	if( $element->hasAttribute('alt') && ( $alt = html2text_cleanspace($element->getAttribute('alt')) ) ) {$/;"	v
-animal	edit_animal.php	/^$animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
+animal	edit_animal.php	/^    $animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
 animalId	edit_animal_action.php	/^$animalId = $_POST['animal_id'];$/;"	v
 animalListToHtml	methods.php	/^function animalListToHtml( $animals )$/;"	f
 animals	sqlite.php	/^    $animals = getAnimalList( );$/;"	v
@@ -76,6 +77,7 @@ dbname	insert_animal_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbname	insert_cage_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbname	sqlite.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbnames_	db/init_db.py	/^dbnames_ = [ 'jinawar.sqlite' ]$/;"	v
+default	methods.php	/^function __get__( $arr, $what, $default = NULL )$/;"	v
 delay	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	v
 details	final.php	/^$details = getStudentInformation($ldap);$/;"	v
 drop	html2text.php	/^		$drop = $elementindex == 1 && $elem_det[10];$/;"	v
@@ -97,7 +99,6 @@ getAnimalList	sqlite.php	/^function getAnimalList( )$/;"	f
 getAnimalWithId	sqlite.php	/^function getAnimalWithId( $id )$/;"	f
 getInfoForDisplay	sqlite.php	/^function getInfoForDisplay()$/;"	f
 getListOfCages	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	f
-getListOfStrains	methods.php	/^function getListOfStrains( $selected_strain = NULL )$/;"	f
 getUserInfoFromLdap	ldap.php	/^function getUserInfoFromLdap($ldap_ip="ldap.ncbs.res.in", $ldap)$/;"	f
 goBackToPageLink	methods.php	/^function goBackToPageLink( $url )$/;"	f
 goToPage	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	f
@@ -137,7 +138,7 @@ i	ldap.php	/^    for( $i=0; $i < $info['count']; $i++)$/;"	v
 i	sqlite.php	/^        $i = 0;$/;"	v
 i	sqlite.php	/^    $i = 0;$/;"	v
 id	print.php	/^	$id = $course['id'];$/;"	v
-info	error.php	/^    $info ="<font size=\\"8\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
+info	error.php	/^    $info ="<font size=\\"6\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
 info	ldap.php	/^    $info = ldap_get_entries($ds, $sr);$/;"	v
 info	sqlite.php	/^  $info = array();$/;"	v
 inifile	index.php	/^$inifile = "jinawarrc";$/;"	v
@@ -162,8 +163,9 @@ numAnimals	sqlite.php	/^    $numAnimals = sizeof( $breederCages );$/;"	v
 numBreederCages	sqlite.php	/^    $numBreederCages = sizeof( $breederCages );$/;"	v
 numCages	sqlite.php	/^    $numCages = sizeof( $cages );$/;"	v
 num_child	html2text.php	/^	$num_child = $element->childNodes->length;$/;"	v
-oldval	edit_animal.php	/^            $oldval = $animal['current_cage_id'];$/;"	v
-oldval	edit_animal.php	/^            $oldval = 'Unassigned';$/;"	v
+oldval	edit_animal.php	/^        $oldval = 'Unassigned';$/;"	v
+oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'currnet_cage_id', 'Unassigned' );$/;"	v
+oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'strain', 'Unassigned' );$/;"	v
 output	html2text.php	/^	$output = '';$/;"	v
 pCourse	final.php	/^$pCourse = $history[0]['job'];$/;"	v
 parent_node	html2text.php	/^		$parent_node = $parent_node->parentNode;$/;"	v
@@ -210,7 +212,7 @@ result	ldap.php	/^    $result = array();$/;"	v
 result	sqlite.php	/^    $result = Array();$/;"	v
 row	sqlite.php	/^        while( $row = $res->fetchArray( SQLITE3_ASSOC ) )$/;"	v
 second	print.php	/^	$second = getCourseNameFaculty($preferences['preference2'], $this_sem);$/;"	v
-selected_strain	methods.php	/^function getListOfStrains( $selected_strain = NULL )$/;"	v
+selected_strain	methods.php	/^function strainsToHtml( $selected_strain = NULL )$/;"	v
 sendEmail	mail.php	/^function sendEmail($msg, $ldap) $/;"	f
 sendEmailToAdmin	error.php	/^function sendEmailToAdmin($err_msg, $db_name) {$/;"	f
 sendEmailWithSub	mail.php	/^function sendEmailWithSub($msg, $sub, $ldap) $/;"	f
@@ -221,8 +223,9 @@ sr	ldap.php	/^    $sr = ldap_search($ds, $base_dn, "uid=$ldap");$/;"	v
 stmt	insert_animal_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO animals $/;"	v
 stmt	insert_cage_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO cages $/;"	v
 str	print.php	/^	$str = "<b> Roll no : <\/b> : ";$/;"	v
-strain	edit_animal.php	/^$strain = $animal['strain'];$/;"	v
+strain	edit_animal.php	/^    $strain = $animal['strain'];$/;"	v
 strain	insert_cage.php	/^    $strain = $_SESSION['conf']['cage']['type'];$/;"	v
+strainsToHtml	methods.php	/^function strainsToHtml( $selected_strain = NULL )$/;"	f
 strippedStr	html2text.php	/^			$strippedStr = preg_replace( "\/<\\?[\\w\\W]*\\?>\/u", '', $sourceStr );$/;"	v
 strippedStr	html2text.php	/^			if( $strippedStr === null ) {$/;"	v
 summaryTable	sqlite.php	/^function summaryTable( )$/;"	f
@@ -245,4 +248,6 @@ url	methods.php	/^  $url = $conf['global']['base_url']."\/".$page;$/;"	v
 vars	insert_animal_action.php	/^    $vars = array_map( 'trim', $vars );$/;"	v
 vars	insert_cage_action.php	/^    $vars = array_map( 'trim', $vars );$/;"	v
 warn	error.php	/^    $warn ="<font size=\\"3\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
+what	edit_animal.php	/^    else if( $what ==  'strain' ) $/;"	v
 what	edit_animal.php	/^    if( $what == "cage" )$/;"	v
+what	edit_animal.php	/^    if( $what == "genotype" )$/;"	v

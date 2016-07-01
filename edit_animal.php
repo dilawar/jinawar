@@ -25,7 +25,7 @@ function change( $animal, $what )
     if( $what == "cage" )
         $html .= "<td>" . cageIdsToHtml( NULL ) . "</td>";
 
-    if( $what == "genotype" )
+    if( $what == "strain" )
         $html .= "<td>" . strainsToHtml( ) . "</td>";
 
     $html .= '<td><input type="submit" name="update" value="Update ' . $what. '"></td></tr>';
@@ -36,7 +36,6 @@ function change( $animal, $what )
 
 if( $_POST && $_POST[ 'animal_id']  )
 {
-
     $animal = getAnimalWithId( $_POST['animal_id'] );
     $strain = $animal['strain'];
 
@@ -90,7 +89,8 @@ if( $_POST && $_POST[ 'animal_id']  )
         break;
 
     case "Record genotype":
-        echo change( $animal, "genotype" );
+        echo change( $animal, "strain" );
+        break;
 
     default:
         echo printWarning( "Unsupported/unimplemented response " . $_POST["response"] );
