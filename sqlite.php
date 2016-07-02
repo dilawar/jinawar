@@ -14,10 +14,15 @@ function getAnimalWithId( $id )
 
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );
+
+    $stmt = $conn->prepare( 'SELECT * FROM animals WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
     $arr = $res->fetchArray( SQLITE3_ASSOC );
 
-    $res = $conn->query( 'SELECT * FROM current_status WHERE id=' . $id );
+    $stmt = $conn->prepare( 'SELECT * FROM current_status WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
     $arr1 = $res->fetchArray( SQLITE3_ASSOC );
 
     $conn->close();
@@ -105,6 +110,19 @@ function summaryTable( )
     $html .= "<tr> <td>No of breeder cages </td><td> $numBreederCages </td> </tr>";
     $html .= "</table>";
     return $html;
+}
+
+function getHealth( $id )
+{
+    $dbname = $_SESSION['db_unmutable'];
+    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
+    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
+    if( $res )
+        return $res->fetchArray( );
+    else
+        return Array();
 }
 
 ?>

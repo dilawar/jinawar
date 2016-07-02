@@ -4,15 +4,22 @@ include_once( "is_valid_access.php" );
 include_once( "sqlite.php" );
 include_once( "error.php" );
 
+//var_dump( $_POST );
+
 $animalId = $_POST['animal_id'];
 
 function update( $what, $value, $animal_id )
 {
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Failed to connect to $dbname" );
-    $res = $conn->query( 
-        "INSERT OR REPLACE INTO current_status ( id, $what )
-             VALUES ( '$animal_id', '$value' )" );
+    $stmt = $conn->prepare( 
+        "INSERT OR REPLACE INTO current_status ( id, $what ) VALUES ( :id, :val )" 
+    );
+
+    $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+    $stmt->bindValue( ':val', $value, SQLITE3_TEXT );
+    $res = $stmt->execute( );
+
     $conn->close();
     if( $res ) 
         return true;
@@ -58,7 +65,8 @@ case "Update strain":
 
 default:
     echo printWarning( "Unknown update operation ".  $_POST['update'] );
-    echo '<a href="user.php">Go back</a>';
+    echo implode( ' ', $_POST );
+    echo goBackToPageLink( 'user.php' );
     break;
 }
 

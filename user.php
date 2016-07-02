@@ -33,7 +33,7 @@ include_once( "methods.php" );
             <?php $animals = getAnimalList( ); 
                 echo animalsToDataList( $animals );
             ?> Animal 
-            <input list="animal_list" name="animal_id" >
+            <input list="animal_list" name="animal_id" required >
     </td>
     <td>
         <input type="submit"  name="response" value="Assign/Change cage" >

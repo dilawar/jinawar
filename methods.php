@@ -12,11 +12,11 @@ date_default_timezone_set('Asia/Kolkata');
 function strainsToHtml( $selected_strain = NULL )
 {
     if( ! $selected_strain )
-        $html = "<select name=\"animal_strain\"> 
-        <option disabled selected value> -- select an option -- </option>"
+        $html = "<select name=\"animal_strain\" required > 
+        <option value=\"unknown\">Yet to determine</option>"
         ;
     else
-        $html = "<select name=\"animal_strain\">"; 
+        $html = "<select name=\"animal_strain\" required>"; 
 
     $listOfStrain = $_SESSION['conf']['animal']['strain'];
     foreach( $listOfStrain as $strain )

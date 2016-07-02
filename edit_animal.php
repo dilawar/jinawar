@@ -12,9 +12,9 @@ function change( $animal, $what )
     $html = "<h3>Changing animal cage ...</h3>";
 
     if( $what == "cage" )
-        $oldval = __get__( $animal, 'currnet_cage_id', 'Unassigned' );
+        $oldval = __get__( $animal, 'current_cage_id', 'Unknown' );
     else if( $what ==  'strain' ) 
-        $oldval = __get__( $animal, 'strain', 'Unassigned' );
+        $oldval = __get__( $animal, 'strain', 'Unknown' );
     else
         $oldval = 'Unassigned';
 
@@ -34,6 +34,39 @@ function change( $animal, $what )
     return $html;
 }
 
+function updateHealth( $animal_id )
+{
+    $html = "<table id=\"table_input1\">";
+    $html .= ' <tr> 
+            <td>Length</td> 
+            <td> <input type="number" name="length" value="0">mm</input>
+            </td> </tr> ';
+    $html .= ' <tr> <td>Height</td> 
+            <td> 
+                <input type="number" name="height" value="0">mm</input>
+            </td> </tr> ';
+    $html .= ' <tr> 
+            <td>Weight</td> 
+            <td> <input type="number" name="weight" value="0">gm</input> </td> 
+        </tr> ';
+    $html .= ' <tr> 
+            <td>Died on</td> 
+            <td> <input type="date" name="died_on"></input> </td> 
+        </tr> ';
+    $html .= ' <tr> 
+            <td>Reason of death</td> 
+            <td> <input type="text" name="deadly_reason"></input> </td> 
+        </tr> ';
+
+    $html .= '<tr> <td></td> 
+        <td> 
+            <input style="float: right" type="submit" name="submit" value="Update" />
+        </td> </tr>';
+
+    $html .= "</table>";
+    return $html;
+}
+
 if( $_POST && $_POST[ 'animal_id']  )
 {
     $animal = getAnimalWithId( $_POST['animal_id'] );
@@ -43,9 +76,6 @@ if( $_POST && $_POST[ 'animal_id']  )
 
 <h3> Editing/Updating animal </h3>
 
-<table id="table_input" >
-
-<form method="post" action="edit_animal_action.php" id="form_insert_animal" >
 <table  id = "table_input" >
 <tr>
     <td>ID of the animal </td>
@@ -77,7 +107,8 @@ if( $_POST && $_POST[ 'animal_id']  )
 <?php
 ?>
 
-<form action="edit_animal_action.php">
+<!-- Here is default form which sends to edit_animal_action.php file -->
+<form method="post" action="edit_animal_action.php">
 
 <?php
 
@@ -90,6 +121,13 @@ if( $_POST && $_POST[ 'animal_id']  )
 
     case "Record genotype":
         echo change( $animal, "strain" );
+        break;
+
+    case "Update health":
+        echo "<h3>Updating health .. </h3>";
+        echo "<p> No field is neccessary. But it is expected that you'll 
+            update something </p>";
+        echo updateHealth( $animal );
         break;
 
     default:
