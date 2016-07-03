@@ -26,7 +26,7 @@ include_once( "methods.php" );
 </table>
 <br />
 
-<form method="post" action="show_animal_info.php" id="form_show_animnal">
+<form method="post" action="user_show_animal_info.php" id="form_show_animnal">
 <table id="table_input">
   <tr>
     <td valign="top">

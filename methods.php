@@ -109,5 +109,18 @@ function __get__( $arr, $what, $default = NULL )
         return $default;
 }
 
+function age( $dob )
+{
+    $now = new DateTime();
+    $date = new DateTime( $dob );
+    $age = $date->diff($now);
+    return $age;
+}
+
+function ageInDays( $dob )
+{
+    $age = age( $dob );
+    return $age->format( '%R%a days' );
+}
 
 ?>

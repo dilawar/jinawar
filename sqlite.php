@@ -25,6 +25,9 @@ function getAnimalWithId( $id )
     $res = $stmt->execute( );
     $arr1 = $res->fetchArray( SQLITE3_ASSOC );
 
+    if( $arr1 )
+        $arr = array_merge( $arr, $arr1 );
+
     $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id');
     $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
     $res = $stmt->execute( );
@@ -32,19 +35,9 @@ function getAnimalWithId( $id )
 
     $conn->close();
 
-    if( $arr1 )
-        $arr = array_merge( $arr, $arr1 );
     if( $arr2 )
         $arr = array_merge( $arr, $arr2 );
     return $arr;
-}
-
-function getAnimalInfo( $animal_id )
-{
-    $tableC = '';
-
-    $html = '<table id="table_output">'. $tableC . '</table>';
-    return $html;
 }
 
 function getInfoForDisplay()

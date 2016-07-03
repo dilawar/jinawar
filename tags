@@ -18,8 +18,13 @@ __version__	db/init_db.py	/^__version__          = "1.0.0"$/;"	v
 action	html2text.php	/^	if( $element->hasAttribute('action') && ( $action = html2text_resolve($element->getAttribute('action'),$element) ) ) {$/;"	v
 add_tables	db/init_db.py	/^def add_tables( db ):$/;"	f
 add_tables_to_jinawar	db/init_db.py	/^def add_tables_to_jinawar( db ):$/;"	f
+age	methods.php	/^    $age = $now->diff($date);$/;"	v
+age	methods.php	/^    $age = age( $dob );$/;"	v
+age	methods.php	/^function age( $dob )$/;"	f
+ageInDays	methods.php	/^function ageInDays( $dob )$/;"	f
 alt	html2text.php	/^	if( $element->hasAttribute('alt') && ( $alt = html2text_cleanspace($element->getAttribute('alt')) ) ) {$/;"	v
 animal	edit_animal.php	/^    $animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
+animal	user_show_animal_info.php	/^$animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
 animalId	edit_animal_action.php	/^$animalId = $_POST['animal_id'];$/;"	v
 animalListToHtml	methods.php	/^function animalListToHtml( $animals )$/;"	f
 animals	sqlite.php	/^    $animals = getAnimalList( );$/;"	v
@@ -31,10 +36,12 @@ arg3	mail.php	/^	$arg3=" -e \\"set realname=\\"EE-Minion\\"\\"";$/;"	v
 arg4	mail.php	/^	$arg4=" -e \\"set content_type=text\/html\\"";$/;"	v
 arg5	mail.php	/^	$arg5=" '$to' 2>&1";$/;"	v
 arr	sqlite.php	/^          $arr = $res->fetchArray();$/;"	v
-arr	sqlite.php	/^        $arr = array_merge( $arr + $arr1 );$/;"	v
+arr	sqlite.php	/^        $arr = array_merge( $arr, $arr1 );$/;"	v
+arr	sqlite.php	/^        $arr = array_merge( $arr, $arr2 );$/;"	v
 arr	sqlite.php	/^    $arr = $res->fetchArray( SQLITE3_ASSOC );$/;"	v
 arr	sqlite.php	/^    while( $arr = $response->fetchArray( SQLITE3_BOTH ) )$/;"	v
 arr1	sqlite.php	/^    $arr1 = $res->fetchArray( SQLITE3_ASSOC );$/;"	v
+arr2	sqlite.php	/^    $arr2 = $res->fetchArray( SQLITE3_ASSOC );$/;"	v
 array	sqlite.php	/^    $array = Array();$/;"	v
 base	html2text.php	/^	$base = $element->ownerDocument->h2t_base;$/;"	v
 base_dn	ldap.php	/^    $base_dn = 'dc=ncbs,dc=res,dc=in';$/;"	v
@@ -74,6 +81,7 @@ course1	final.php	/^$course1 = getCourseNameFaculty($pCourse, $prevSem);$/;"	v
 course2	final.php	/^$course2 = getCourseNameFaculty($ppCourse, $pprevSem);$/;"	v
 course_list_1	history.php	/^$course_list_1 = getCourseList($prevSem);$/;"	v
 course_list_2	history.php	/^$course_list_2 = getCourseList($pprevSem);$/;"	v
+date	methods.php	/^    $date = new DateTime( $dob );$/;"	v
 db	final.php	/^$db = "ta".$this_sem;$/;"	v
 db	sqlite.php	/^  $db = new SQLite3($location);$/;"	v
 dbname	edit_animal_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
@@ -145,7 +153,7 @@ i	ldap.php	/^    for( $i=0; $i < $info['count']; $i++)$/;"	v
 i	sqlite.php	/^        $i = 0;$/;"	v
 i	sqlite.php	/^    $i = 0;$/;"	v
 id	print.php	/^	$id = $course['id'];$/;"	v
-info	error.php	/^    $info ="<font size=\\"6\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
+info	error.php	/^    $info ="<p width=\\"550px\\"><font size=\\"4\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
 info	ldap.php	/^    $info = ldap_get_entries($ds, $sr);$/;"	v
 info	sqlite.php	/^  $info = array();$/;"	v
 inifile	index.php	/^$inifile = "jinawarrc";$/;"	v
@@ -166,6 +174,7 @@ msg	mail.php	/^	$msg = html2text($msg);$/;"	v
 name	ldap.php	/^        $name = $info[$i]["givenname"][0];$/;"	v
 name	print.php	/^	$name = $course['name'];$/;"	v
 node	html2text.php	/^		$node = $element->childNodes->item($i);$/;"	v
+now	methods.php	/^    $now = new DateTime();$/;"	v
 numAnimals	sqlite.php	/^    $numAnimals = sizeof( $breederCages );$/;"	v
 numBreederCages	sqlite.php	/^    $numBreederCages = sizeof( $breederCages );$/;"	v
 numCages	sqlite.php	/^    $numCages = sizeof( $cages );$/;"	v
@@ -231,12 +240,14 @@ sql	db/init_db.py	/^import sqlite3 as sql$/;"	i
 sqlite_open	sqlite.php	/^function sqlite_open($location)$/;"	f
 sr	ldap.php	/^    $sr = ldap_search($ds, $base_dn, "uid=$ldap");$/;"	v
 stmt	edit_animal_action.php	/^        $stmt = $conn->prepare( $/;"	v
+stmt	edit_animal_action.php	/^        $stmt = $conn->prepare( 'UPDATE animals SET status=:status WHERE id=:id' );$/;"	v
 stmt	edit_animal_action.php	/^    $stmt = $conn->prepare( $/;"	v
 stmt	insert_animal_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO animals $/;"	v
 stmt	insert_cage_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO cages $/;"	v
 stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM animals WHERE id=:id');$/;"	v
 stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM current_status WHERE id=:id');$/;"	v
 stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );$/;"	v
+stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id');$/;"	v
 str	print.php	/^	$str = "<b> Roll no : <\/b> : ";$/;"	v
 strain	edit_animal.php	/^    $strain = $animal['strain'];$/;"	v
 strain	edit_animal_action.php	/^    $strain = $_POST['animal_strain'];$/;"	v

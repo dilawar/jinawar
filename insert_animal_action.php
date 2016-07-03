@@ -30,6 +30,8 @@ function insert_animal( $vars )
     $stmt->bindValue( ':parent_cage_id', $vars['cage_id'], SQLITE3_TEXT );
     $stmt->bindValue( ':gender', $vars['animal_gender'], SQLITE3_TEXT );
     $stmt->bindValue( ':comment', $vars['animal_comment'], SQLITE3_TEXT );
+
+    //TODO: Image image insertion. Not to database but to filesystem.
     $result = $stmt->execute( );
     
     return $result;
