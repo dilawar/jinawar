@@ -30,39 +30,43 @@ function change( $animal, $what )
 
     $html .= '<td><input type="submit" name="update" value="Update ' . $what. '"></td></tr>';
     $html .= "</table>";
-    $html .= '<input type="hidden" name="animal_id" value="' . $animal['id'] . '" />';
     return $html;
 }
 
 function updateHealth( $animal_id )
 {
+    $health = getHealth( $animal_id );
+
     $html = "<table id=\"table_input1\">";
     $html .= ' <tr> 
             <td>Length</td> 
-            <td> <input type="number" name="length" value="0">mm</input>
+            <td> <input type="number" name="length" value="' . $health['length']. '">mm</input>
             </td> </tr> ';
     $html .= ' <tr> <td>Height</td> 
             <td> 
-                <input type="number" name="height" value="0">mm</input>
+                <input type="number" name="height" value="' . $health['height'] . '">mm</input>
             </td> </tr> ';
     $html .= ' <tr> 
             <td>Weight</td> 
-            <td> <input type="number" name="weight" value="0">gm</input> </td> 
+            <td> <input type="number" name="weight" value="' . $health['weight'] . '">gm</input> </td> 
         </tr> ';
     $html .= ' <tr> 
             <td>Died on</td> 
-            <td> <input type="date" name="died_on"></input> </td> 
+            <td> <input type="date" name="died_on" id="date_died_on" placeholder=" 
+            '. $health['died_on'] . '"></input> </td> 
+            <script type="text/javascript" charset="utf-8">
+                var dt = new Date();
+                var today = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+                //document.getElementById("date_died_on").value = today;
+            </script>
         </tr> ';
     $html .= ' <tr> 
             <td>Reason of death</td> 
-            <td> <input type="text" name="deadly_reason"></input> </td> 
+            <td> <textarea type="text" name="deadly_reason">'. $health['deadly_reason'] . '</textarea> </td> 
         </tr> ';
-
-    $html .= '<tr> <td></td> 
-        <td> 
-            <input style="float: right" type="submit" name="submit" value="Update" />
-        </td> </tr>';
-
+    $html .= '<tr> <td></td> <td>
+        <input style="float: right" type="submit" name="update" value="Update Health">
+        </td></tr>';
     $html .= "</table>";
     return $html;
 }
@@ -127,7 +131,7 @@ if( $_POST && $_POST[ 'animal_id']  )
         echo "<h3>Updating health .. </h3>";
         echo "<p> No field is neccessary. But it is expected that you'll 
             update something </p>";
-        echo updateHealth( $animal );
+        echo updateHealth( $animal['id'] );
         break;
 
     default:
@@ -135,6 +139,9 @@ if( $_POST && $_POST[ 'animal_id']  )
         break;
 
     }
+
+    // Need to send animal_id.
+    echo '<input type="hidden" name="animal_id" value="' . $animal['id'] . '" />';
 ?>
 </form>
 

@@ -25,11 +25,26 @@ function getAnimalWithId( $id )
     $res = $stmt->execute( );
     $arr1 = $res->fetchArray( SQLITE3_ASSOC );
 
+    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
+    $arr2 = $res->fetchArray( SQLITE3_ASSOC );
+
     $conn->close();
 
     if( $arr1 )
-        $arr = array_merge( $arr + $arr1 );
+        $arr = array_merge( $arr, $arr1 );
+    if( $arr2 )
+        $arr = array_merge( $arr, $arr2 );
     return $arr;
+}
+
+function getAnimalInfo( $animal_id )
+{
+    $tableC = '';
+
+    $html = '<table id="table_output">'. $tableC . '</table>';
+    return $html;
 }
 
 function getInfoForDisplay()
@@ -112,17 +127,28 @@ function summaryTable( )
     return $html;
 }
 
-function getHealth( $id )
+function getHealth( $animal_id )
+{
+    $conn = connetJinawar( );
+
+    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );
+    $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+
+    $res = $stmt->execute( );
+
+    if( $res )
+        $result = $res->fetchArray( );
+    else
+        $result = Array();
+    $conn->close( );
+    return $result;
+}
+
+function connetJinawar( )
 {
     $dbname = $_SESSION['db_unmutable'];
-    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );
-    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
-    $res = $stmt->execute( );
-    if( $res )
-        return $res->fetchArray( );
-    else
-        return Array();
+    $conn = sqlite_open( $dbname ) or die ("Could not connect to $dbname " );
+    return $conn;
 }
 
 ?>

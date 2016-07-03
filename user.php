@@ -5,6 +5,7 @@ include_once( "methods.php" );
 
 // List of taks a user can do.
 ?>
+
  <table id="table_input">
   <tr>
     <td>Insert a new cage</td>
@@ -23,8 +24,27 @@ include_once( "methods.php" );
     </td>
   </tr>
 </table>
+<br />
 
-<br>
+<form method="post" action="show_animal_info.php" id="form_show_animnal">
+<table id="table_input">
+  <tr>
+    <td valign="top">
+            <?php $animals = getAnimalList( ); 
+                echo animalsToDataList( $animals );
+            ?> Animal 
+            <input list="animal_list" name="animal_id" required >
+    </td>
+    <td>
+        <input type="submit"  name="response" value="Show current status" >
+        <br>
+        <input type="submit"  name="response" value="Show hisotry" >
+    </td>
+  </tr>
+</table> 
+</form>
+
+<br />
 
 <form method="post" action="edit_animal.php" id="form_edit_animnal">
 <table id="table_input">

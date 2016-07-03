@@ -32,11 +32,6 @@ on <strong>Edit/Update animal</strong> page </p>
 </tr>
 
 <tr>
-    <td>Strain</td>
-    <td>  <?php echo strainsToHtml( ) ?> </td>
-</tr>
-
-<tr>
     <td>Parent cage ID*<br><small>Animal was born in this cage</small></td> 
     <td> <?php echo cageIdsToHtml( $type = "breeder" ); ?> </td>
 </tr>

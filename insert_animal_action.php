@@ -19,9 +19,9 @@ function insert_animal( $vars )
     }
 
     $stmt = $conn->prepare( 'INSERT OR FAIL INTO animals 
-        (id, name, dob, parent_cage_id, gender, strain, comment ) 
+        (id, name, dob, parent_cage_id, gender, comment ) 
         VALUES
-        ( :id, :name, :dob, :parent_cage_id, :gender, :strain, :comment ) '
+        ( :id, :name, :dob, :parent_cage_id, :gender, :comment ) '
     ); 
     $vars = array_map( 'trim', $vars );
     $stmt->bindValue( ':id', $vars['animal_id'], SQLITE3_TEXT );
@@ -29,7 +29,6 @@ function insert_animal( $vars )
     $stmt->bindValue( ':dob', $vars['animal_dob'], SQLITE3_TEXT );
     $stmt->bindValue( ':parent_cage_id', $vars['cage_id'], SQLITE3_TEXT );
     $stmt->bindValue( ':gender', $vars['animal_gender'], SQLITE3_TEXT );
-    $stmt->bindValue( ':strain', $vars['animal_strain'], SQLITE3_BLOB );
     $stmt->bindValue( ':comment', $vars['animal_comment'], SQLITE3_TEXT );
     $result = $stmt->execute( );
     
@@ -46,7 +45,7 @@ if( ! $res )
 }
 else
 {
-    echo printInfo( 'Successfully inserted animal' . $_POST["animal_id"] );
+    echo printInfo( 'Successfully inserted animal ' . $_POST["animal_id"] );
     goToPage( 'insert_animal.php', 2 );
 }
 

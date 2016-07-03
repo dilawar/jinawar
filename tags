@@ -57,13 +57,17 @@ conf	index.php	/^$conf = array();$/;"	v
 conf	login.php	/^$conf = $_SESSION['conf'];$/;"	v
 conf	methods.php	/^  $conf = $_SESSION['conf'];$/;"	v
 conf	tables.php	/^  $conf = $_SESSION['conf'];$/;"	v
+conn	edit_animal_action.php	/^    $conn = connetJinawar( );$/;"	v
 conn	edit_animal_action.php	/^    $conn = sqlite_open( $dbname ) or die( "Failed to connect to $dbname" );$/;"	v
 conn	insert_animal_action.php	/^    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );$/;"	v
 conn	insert_cage_action.php	/^    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );$/;"	v
 conn	login.php	/^$conn = imap_open( "{imap.ncbs.res.in}INBOX", $ldap, $pass, OP_HALFOPEN );$/;"	v
+conn	sqlite.php	/^    $conn = connetJinawar( );$/;"	v
+conn	sqlite.php	/^    $conn = sqlite_open( $dbname ) or die ("Could not connect to $dbname " );$/;"	v
 conn	sqlite.php	/^    $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );$/;"	v
 conn	sqlite.php	/^    $conn = sqlite_open( $dbname ) or die( "failed to open $dbname" );$/;"	v
 conn	sqlite.php	/^  $conn = sqlite_open("db\/jinawar.sqlite");$/;"	v
+connetJinawar	sqlite.php	/^function connetJinawar( )$/;"	f
 content	html2text.php	/^				$content = preg_replace("\/[ \\t\\f\\r\\n]+\/u",' ',preg_replace("\/^[ \\t\\f\\r\\n]+|[ \\t\\f\\r\\n]+$\/u",'',$node->nodeValue));$/;"	v
 course	print.php	/^	$course = $data['specialization'];$/;"	v
 course1	final.php	/^$course1 = getCourseNameFaculty($pCourse, $prevSem);$/;"	v
@@ -97,6 +101,7 @@ flags	html2text.php	/^	$flags = $element->ownerDocument;$/;"	v
 generateRandomString	methods.php	/^function generateRandomString($length = 10) $/;"	f
 getAnimalList	sqlite.php	/^function getAnimalList( )$/;"	f
 getAnimalWithId	sqlite.php	/^function getAnimalWithId( $id )$/;"	f
+getHealth	sqlite.php	/^function getHealth( $animal_id )$/;"	f
 getInfoForDisplay	sqlite.php	/^function getInfoForDisplay()$/;"	f
 getListOfCages	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	f
 getUserInfoFromLdap	ldap.php	/^function getUserInfoFromLdap($ldap_ip="ldap.ncbs.res.in", $ldap)$/;"	f
@@ -104,13 +109,15 @@ goBackToPageLink	methods.php	/^function goBackToPageLink( $url )$/;"	f
 goToPage	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	f
 gradMonth	print.php	/^	$gradMonth = $data['gradSem'];$/;"	v
 gradYear	print.php	/^	$gradYear = $data['gradYear'];$/;"	v
+health	edit_animal.php	/^    $health = getHealth( $animal_id );$/;"	v
 history	final.php	/^$history = getHistoryOfPrevTwoSem($this_sem, $ldap);$/;"	v
 hit_count	index.php	/^$hit_count = (int)file_get_contents('count.txt');$/;"	v
 href	html2text.php	/^			$href = preg_replace("\/^\\.\\.\\\/\/u",'',$href);$/;"	v
 href	html2text.php	/^	if( $element->hasAttribute('href') && ( $href = html2text_resolve($element->getAttribute('href'),$element) ) ) {$/;"	v
 html	edit_animal.php	/^    $html = "<h3>Changing animal cage ...<\/h3>";$/;"	v
-html	methods.php	/^        $html = "<select name=\\"animal_strain\\"> $/;"	v
-html	methods.php	/^        $html = "<select name=\\"animal_strain\\">"; $/;"	v
+html	edit_animal.php	/^    $html = "<table id=\\"table_input1\\">";$/;"	v
+html	methods.php	/^        $html = "<select name=\\"animal_strain\\" required > $/;"	v
+html	methods.php	/^        $html = "<select name=\\"animal_strain\\" required>"; $/;"	v
 html	methods.php	/^        $html = "<select name=\\"cage_id\\"> $/;"	v
 html	methods.php	/^        $html = "<select name=\\"cage_id\\">";$/;"	v
 html	methods.php	/^    $html = "<a href=\\"$url\\"><font color=\\"blue\\">Go back<\/font><\/a>";$/;"	v
@@ -164,8 +171,8 @@ numBreederCages	sqlite.php	/^    $numBreederCages = sizeof( $breederCages );$/;"
 numCages	sqlite.php	/^    $numCages = sizeof( $cages );$/;"	v
 num_child	html2text.php	/^	$num_child = $element->childNodes->length;$/;"	v
 oldval	edit_animal.php	/^        $oldval = 'Unassigned';$/;"	v
-oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'currnet_cage_id', 'Unassigned' );$/;"	v
-oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'strain', 'Unassigned' );$/;"	v
+oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'current_cage_id', 'Unknown' );$/;"	v
+oldval	edit_animal.php	/^        $oldval = __get__( $animal, 'strain', 'Unknown' );$/;"	v
 output	html2text.php	/^	$output = '';$/;"	v
 pCourse	final.php	/^$pCourse = $history[0]['job'];$/;"	v
 parent_node	html2text.php	/^		$parent_node = $parent_node->parentNode;$/;"	v
@@ -195,7 +202,9 @@ prog	print.php	/^	$prog = $data['program'];$/;"	v
 prompt	html2text.php	/^	if( $element->hasAttribute('prompt') && ( $prompt = html2text_cleanspace($element->getAttribute('prompt')) ) ) {$/;"	v
 r	ldap.php	/^    $r = ldap_bind($ds);$/;"	v
 randomString	methods.php	/^    $randomString = '';$/;"	v
-res	edit_animal_action.php	/^    $res = $conn->query( $/;"	v
+res	edit_animal_action.php	/^        $res = $stmt->execute( );$/;"	v
+res	edit_animal_action.php	/^    $res = $stmt->execute( );$/;"	v
+res	edit_animal_action.php	/^    $res = updateHealth( $_POST['animal_id'], $_POST );$/;"	v
 res	insert_animal_action.php	/^    $res = $conn->query( 'SELECT * FROM animals WHERE id="' . $vars['animal_id'] . '"');$/;"	v
 res	insert_animal_action.php	/^$res = insert_animal( $_POST );$/;"	v
 res	insert_cage_action.php	/^    $res = $conn->query( 'SELECT * FROM cages WHERE id="' . $vars['cage_id'] . '"');$/;"	v
@@ -203,12 +212,13 @@ res	insert_cage_action.php	/^$res = insert_cage( $_POST );$/;"	v
 res	sqlite.php	/^            $res = $conn->query( 'SELECT * FROM cages WHERE type="'. $type . '"' );$/;"	v
 res	sqlite.php	/^            $res = $conn->query( 'SELECT * FROM cages' );$/;"	v
 res	sqlite.php	/^      $res = $conn->query("SELECT Count(*) FROM mice");$/;"	v
-res	sqlite.php	/^    $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );$/;"	v
-res	sqlite.php	/^    $res = $conn->query( 'SELECT * FROM current_status WHERE id=' . $id );$/;"	v
+res	sqlite.php	/^    $res = $stmt->execute( );$/;"	v
 response	sqlite.php	/^    $response = $conn->query( 'SELECT id, name FROM animals' );$/;"	v
 result	insert_animal_action.php	/^    $result = $stmt->execute( );$/;"	v
 result	insert_cage_action.php	/^    $result = $stmt->execute( );$/;"	v
 result	ldap.php	/^    $result = array();$/;"	v
+result	sqlite.php	/^        $result = $res->fetchArray( );$/;"	v
+result	sqlite.php	/^        $result = Array();$/;"	v
 result	sqlite.php	/^    $result = Array();$/;"	v
 row	sqlite.php	/^        while( $row = $res->fetchArray( SQLITE3_ASSOC ) )$/;"	v
 second	print.php	/^	$second = getCourseNameFaculty($preferences['preference2'], $this_sem);$/;"	v
@@ -220,10 +230,16 @@ sourceStr	html2text.php	/^		$sourceStr = html2text_render($DOM->documentElement,
 sql	db/init_db.py	/^import sqlite3 as sql$/;"	i
 sqlite_open	sqlite.php	/^function sqlite_open($location)$/;"	f
 sr	ldap.php	/^    $sr = ldap_search($ds, $base_dn, "uid=$ldap");$/;"	v
+stmt	edit_animal_action.php	/^        $stmt = $conn->prepare( $/;"	v
+stmt	edit_animal_action.php	/^    $stmt = $conn->prepare( $/;"	v
 stmt	insert_animal_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO animals $/;"	v
 stmt	insert_cage_action.php	/^    $stmt = $conn->prepare( 'INSERT OR FAIL INTO cages $/;"	v
+stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM animals WHERE id=:id');$/;"	v
+stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM current_status WHERE id=:id');$/;"	v
+stmt	sqlite.php	/^    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );$/;"	v
 str	print.php	/^	$str = "<b> Roll no : <\/b> : ";$/;"	v
 strain	edit_animal.php	/^    $strain = $animal['strain'];$/;"	v
+strain	edit_animal_action.php	/^    $strain = $_POST['animal_strain'];$/;"	v
 strain	insert_cage.php	/^    $strain = $_SESSION['conf']['cage']['type'];$/;"	v
 strainsToHtml	methods.php	/^function strainsToHtml( $selected_strain = NULL )$/;"	f
 strippedStr	html2text.php	/^			$strippedStr = preg_replace( "\/<\\?[\\w\\W]*\\?>\/u", '', $sourceStr );$/;"	v
@@ -244,10 +260,12 @@ type	methods.php	/^function cageIdsToHtml( $type = "breeder", $default = NULL )$
 type	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	v
 uid	ldap.php	/^        $uid = $info[$i]["uid"][0];$/;"	v
 update	edit_animal_action.php	/^function update( $what, $value, $animal_id )$/;"	f
+updateHealth	edit_animal.php	/^function updateHealth( $animal_id )$/;"	f
+updateHealth	edit_animal_action.php	/^function updateHealth( $animal_id, $array )$/;"	f
 url	methods.php	/^  $url = $conf['global']['base_url']."\/".$page;$/;"	v
 vars	insert_animal_action.php	/^    $vars = array_map( 'trim', $vars );$/;"	v
 vars	insert_cage_action.php	/^    $vars = array_map( 'trim', $vars );$/;"	v
 warn	error.php	/^    $warn ="<font size=\\"3\\" color=\\"blue\\">".$msg."<br><\/font>";$/;"	v
 what	edit_animal.php	/^    else if( $what ==  'strain' ) $/;"	v
 what	edit_animal.php	/^    if( $what == "cage" )$/;"	v
-what	edit_animal.php	/^    if( $what == "genotype" )$/;"	v
+what	edit_animal.php	/^    if( $what == "strain" )$/;"	v
