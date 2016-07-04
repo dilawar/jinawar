@@ -10,19 +10,59 @@ function update( $what, $value, $animal_id )
 {
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Failed to connect to $dbname" );
-    $res = $conn->query( 
-        "INSERT OR REPLACE INTO current_status ( id, $what )
-             VALUES ( '$animal_id', '$value' )" );
+    $stmt = $conn->prepare( 
+        "INSERT OR REPLACE INTO current_status ( id, $what ) VALUES ( :id, :val )" 
+    );
+
+    $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+    $stmt->bindValue( ':val', $value, SQLITE3_TEXT );
+    $res = $stmt->execute( );
+
     $conn->close();
     if( $res ) 
         return true;
     return false;
 }
 
-switch( trim($_POST['update']) ) 
+function updateHealth( $animal_id, $array )
+{
+    $conn = connetJinawar( );
+    $stmt = $conn->prepare( 
+        'INSERT OR REPLACE INTO health (id, height, length, weight)
+        VALUES (:id, :height, :length, :weight)' 
+    );
+    $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+    $stmt->bindValue( ':height', (int)$array['height'], SQLITE3_INTEGER );
+    $stmt->bindValue( ':weight', (int)$array['weight'], SQLITE3_INTEGER );
+    $stmt->bindValue( ':length', (int)$array['length'], SQLITE3_INTEGER );
+    $res = $stmt->execute( );
+
+    if( $array['died_on'] )
+    {
+        $stmt = $conn->prepare( 
+            'UPDATE health SET 
+                died_on=:died_on, deadly_reason=:deadly_readon
+            WHERE id=:id
+            ' );
+        $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+        $stmt->bindValue( ':died_on', $array['died_on'], SQLITE3_TEXT );
+        $stmt->bindValue( ':deadly_reason', $array['deadly_reason'], SQLITE3_TEXT );
+        $res = $stmt->execute( );
+
+        $stmt = $conn->prepare( 'UPDATE animals SET status=:status WHERE id=:id' );
+        $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+        $stmt->bindValue( ':status', 0, SQLITE3_INTEGER );
+        $res = $stmt->execute( );
+    }
+
+    $conn->close( );
+    return $res;
+}
+
+switch( strtolower(trim($_POST['update'])) ) 
 {
 
-case "Update cage":
+case "update cage":
     $cageId = $_POST['cage_id'];
     if( update( 'current_cage_id', $cageId, $animalId ) )
     {
@@ -36,12 +76,21 @@ case "Update cage":
     }
     break;
 
-case "Update health":
-    echo printInfo( "Is not implemented yet" );
-    echo '<a href="user.php">Go back</a>';
+case "update health":
+    $res = updateHealth( $_POST['animal_id'], $_POST );
+    if( $res )
+    {
+        echo printInfo( "Helath updated successfuly" );
+        goToPage( "user.php", 2 );
+    }
+    else
+    {
+        echo printWarning( "Could not update health" );
+        goBackToPageLink( "user.php" );
+    }
     break;
 
-case "Update strain":
+case "update strain":
     $strain = $_POST['animal_strain'];
     if( update( 'strain', $strain, $animalId ) )
     {
@@ -55,10 +104,10 @@ case "Update strain":
     }
     break;
 
-
 default:
     echo printWarning( "Unknown update operation ".  $_POST['update'] );
-    echo '<a href="user.php">Go back</a>';
+    echo implode( ' ', $_POST );
+    echo goBackToPageLink( 'user.php' );
     break;
 }
 

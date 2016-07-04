@@ -14,16 +14,29 @@ function getAnimalWithId( $id )
 
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $res = $conn->query( 'SELECT * FROM animals WHERE id=' . $id );
+
+    $stmt = $conn->prepare( 'SELECT * FROM animals WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
     $arr = $res->fetchArray( SQLITE3_ASSOC );
 
-    $res = $conn->query( 'SELECT * FROM current_status WHERE id=' . $id );
+    $stmt = $conn->prepare( 'SELECT * FROM current_status WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
     $arr1 = $res->fetchArray( SQLITE3_ASSOC );
+
+    if( $arr1 )
+        $arr = array_merge( $arr, $arr1 );
+
+    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id');
+    $stmt->bindValue( ':id', $id, SQLITE3_TEXT );
+    $res = $stmt->execute( );
+    $arr2 = $res->fetchArray( SQLITE3_ASSOC );
 
     $conn->close();
 
-    if( $arr1 )
-        $arr = array_merge( $arr + $arr1 );
+    if( $arr2 )
+        $arr = array_merge( $arr, $arr2 );
     return $arr;
 }
 
@@ -48,7 +61,7 @@ function getAnimalList( )
 {
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $response = $conn->query( 'SELECT id, name FROM animals' );
+    $response = $conn->query( "SELECT id, name FROM animals WHERE status='alive'" );
     $result = Array();
     $i = 0;
     while( $arr = $response->fetchArray( SQLITE3_BOTH ) )
@@ -93,18 +106,42 @@ function getListOfCages( $type = NULL )
 
 function summaryTable( )
 {
-    $html = "<table id=\"table_info\" style=\"float: left\">";
+    $html = "<table class=\"summary\" style=\"float: left\">";
     $animals = getAnimalList( );
     $breederCages = getListOfCages( "breeder" );
     $cages = getListOfCages( );
     $numAnimals = sizeof( $breederCages );
     $numCages = sizeof( $cages );
     $numBreederCages = sizeof( $breederCages );
-    $html .= "<tr> <td>No of animals </td><td> $numAnimals </td> </tr>";
-    $html .= "<tr> <td>No of all cages </td><td> $numCages </td> </tr>";
-    $html .= "<tr> <td>No of breeder cages </td><td> $numBreederCages </td> </tr>";
+    $html .= "<tr> <td>Alive animals </td><td> $numAnimals </td> </tr>";
+    $html .= "<tr> <td>Total cages </td><td> $numCages </td> </tr>";
+    $html .= "<tr> <td>Breeder cages </td><td> $numBreederCages </td> </tr>";
     $html .= "</table>";
     return $html;
+}
+
+function getHealth( $animal_id )
+{
+    $conn = connetJinawar( );
+
+    $stmt = $conn->prepare( 'SELECT * FROM health WHERE id=:id' );
+    $stmt->bindValue( ':id', $animal_id, SQLITE3_TEXT );
+
+    $res = $stmt->execute( );
+
+    if( $res )
+        $result = $res->fetchArray( );
+    else
+        $result = Array();
+    $conn->close( );
+    return $result;
+}
+
+function connetJinawar( )
+{
+    $dbname = $_SESSION['db_unmutable'];
+    $conn = sqlite_open( $dbname ) or die ("Could not connect to $dbname " );
+    return $conn;
 }
 
 ?>

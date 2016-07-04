@@ -1,6 +1,8 @@
 <?php 
-include_once("sqlite.php");
-include('error.php');
+
+include_once('sqlite.php');
+include_once('error.php');
+include_once( 'logger.php' );
 
 date_default_timezone_set('Asia/Kolkata');
 
@@ -12,11 +14,11 @@ date_default_timezone_set('Asia/Kolkata');
 function strainsToHtml( $selected_strain = NULL )
 {
     if( ! $selected_strain )
-        $html = "<select name=\"animal_strain\"> 
-        <option disabled selected value> -- select an option -- </option>"
+        $html = "<select name=\"animal_strain\" required > 
+        <option value=\"unknown\">Yet to determine</option>"
         ;
     else
-        $html = "<select name=\"animal_strain\">"; 
+        $html = "<select name=\"animal_strain\" required>"; 
 
     $listOfStrain = $_SESSION['conf']['animal']['strain'];
     foreach( $listOfStrain as $strain )
@@ -29,7 +31,7 @@ function strainsToHtml( $selected_strain = NULL )
     return $html;
 }
 
-function cageIdsToHtml( $type = "breeder", $default = NULL )
+function cagesToHtml( $cages, $default = NULL )
 {
     if( ! $default )
         $html = "<select name=\"cage_id\"> 
@@ -38,11 +40,15 @@ function cageIdsToHtml( $type = "breeder", $default = NULL )
     else
         $html = "<select name=\"cage_id\">";
 
-    $cages = getListOfCages( $type );
     foreach( $cages as $cage )
     {
-        $html .= '<option value="'.$cage['id'].'">' . $cage['id'] . 
-           " (" . $cage['type'] . ")" . '</option>';
+        if( $default == $cage['id'] )
+            $selected = 'selected';
+        else 
+            $selected = '';
+
+        $html .= '<option value="'.$cage['id']. '" ' . $selected . ' >' 
+            . $cage['id'] .  " (" . $cage['type'] . ")" . '</option>';
     }
     $html .= "</select>";
     return $html;
@@ -97,7 +103,10 @@ function goToPage($page="index.php", $delay = 3)
 
 function goBackToPageLink( $url )
 {
-    $html = "<a href=\"$url\"><font color=\"blue\">Go back</font></a>";
+    $html = "<br />";
+    $html .= "<a style=\"float: right\" href=\"$url\">
+            <font color=\"blue\" size=\"5\">Go Back</font>
+        </a>";
     return $html;
 }
 
@@ -109,5 +118,18 @@ function __get__( $arr, $what, $default = NULL )
         return $default;
 }
 
+function age( $dob )
+{
+    $now = new DateTime();
+    $date = new DateTime( $dob );
+    $age = $date->diff($now);
+    return $age;
+}
+
+function ageInDays( $dob )
+{
+    $age = age( $dob );
+    return $age->format( '%R%a days' );
+}
 
 ?>
