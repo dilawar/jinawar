@@ -1,6 +1,5 @@
 <?php 
 
-include_once 'is_valid_access.php';
 include_once 'sqlite.php';
 
 function loginForm()
