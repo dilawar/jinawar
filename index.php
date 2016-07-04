@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <?php 
+
 include('header.php');
 include('methods.php');
 include('tables.php');

@@ -12,23 +12,25 @@ __credits__	db/init_db.py	/^__credits__          = ["NCBS Bangalore"]$/;"	v
 __email__	db/init_db.py	/^__email__            = "dilawars@ncbs.res.in"$/;"	v
 __get__	methods.php	/^function __get__( $arr, $what, $default = NULL )$/;"	f
 __license__	db/init_db.py	/^__license__          = "GNU GPL"$/;"	v
+__log__	logger.php	/^function __log__( $message, $type = "INFO" )$/;"	f
 __maintainer__	db/init_db.py	/^__maintainer__       = "Dilawar Singh"$/;"	v
 __status__	db/init_db.py	/^__status__           = "Development"$/;"	v
 __version__	db/init_db.py	/^__version__          = "1.0.0"$/;"	v
 action	html2text.php	/^	if( $element->hasAttribute('action') && ( $action = html2text_resolve($element->getAttribute('action'),$element) ) ) {$/;"	v
 add_tables	db/init_db.py	/^def add_tables( db ):$/;"	f
 add_tables_to_jinawar	db/init_db.py	/^def add_tables_to_jinawar( db ):$/;"	f
-age	methods.php	/^    $age = $now->diff($date);$/;"	v
+age	methods.php	/^    $age = $date->diff($now);$/;"	v
 age	methods.php	/^    $age = age( $dob );$/;"	v
 age	methods.php	/^function age( $dob )$/;"	f
 ageInDays	methods.php	/^function ageInDays( $dob )$/;"	f
 alt	html2text.php	/^	if( $element->hasAttribute('alt') && ( $alt = html2text_cleanspace($element->getAttribute('alt')) ) ) {$/;"	v
 animal	edit_animal.php	/^    $animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
 animal	user_show_animal_info.php	/^$animal = getAnimalWithId( $_POST['animal_id'] );$/;"	v
+animalDataList	user.php	/^$animalDataList = animalsToDataList( $animals );$/;"	v
 animalId	edit_animal_action.php	/^$animalId = $_POST['animal_id'];$/;"	v
 animalListToHtml	methods.php	/^function animalListToHtml( $animals )$/;"	f
 animals	sqlite.php	/^    $animals = getAnimalList( );$/;"	v
-animals	user.php	/^            <?php $animals = getAnimalList( ); $/;"	v
+animals	user.php	/^$animals = getAnimalList( );$/;"	v
 animalsToDataList	methods.php	/^function animalsToDataList( $animals )$/;"	f
 arg1	mail.php	/^	$arg1=" -e \\"set smtp_url=\\"smtp:\/\/sandesh.ee.iitb.ac.in:25\\"\\"";$/;"	v
 arg2	mail.php	/^	$arg2=" -e \\"set from=\\"noreply@ee.iitb.ac.in\\"\\"";$/;"	v
@@ -48,10 +50,10 @@ base_dn	ldap.php	/^    $base_dn = 'dc=ncbs,dc=res,dc=in';$/;"	v
 base_url	history.php	/^$base_url = $init['base_url'];$/;"	v
 breederCages	sqlite.php	/^    $breederCages = getListOfCages( "breeder" );$/;"	v
 cageId	edit_animal_action.php	/^    $cageId = $_POST['cage_id'];$/;"	v
-cageIdsToHtml	methods.php	/^function cageIdsToHtml( $type = "breeder", $default = NULL )$/;"	f
 cage_types_to_html	insert_cage.php	/^function cage_types_to_html( )$/;"	f
-cages	methods.php	/^    $cages = getListOfCages( $type );$/;"	v
+cages	edit_animal.php	/^$cages = getListOfCages( );$/;"	v
 cages	sqlite.php	/^    $cages = getListOfCages( );$/;"	v
+cagesToHtml	methods.php	/^function cagesToHtml( $cages, $default = NULL )$/;"	f
 calls	html2text.php	/^	\/\/flags - it would be possible to pass flags between recursive function calls, or use references, but this is easier$/;"	f
 cat	print.php	/^	$cat = $data['category'];$/;"	v
 change	edit_animal.php	/^function change( $animal, $what )$/;"	f
@@ -89,7 +91,9 @@ dbname	insert_animal_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbname	insert_cage_action.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbname	sqlite.php	/^    $dbname = $_SESSION['db_unmutable'];$/;"	v
 dbnames_	db/init_db.py	/^dbnames_ = [ 'jinawar.sqlite' ]$/;"	v
+default	edit_animal.php	/^        $html .= "<td>" . cagesToHtml( $cages, $default = $oldval ) . "<\/td>";$/;"	v
 default	methods.php	/^function __get__( $arr, $what, $default = NULL )$/;"	v
+default	methods.php	/^function cagesToHtml( $cages, $default = NULL )$/;"	v
 delay	methods.php	/^function goToPage($page="index.php", $delay = 3)$/;"	v
 details	final.php	/^$details = getStudentInformation($ldap);$/;"	v
 drop	html2text.php	/^		$drop = $elementindex == 1 && $elem_det[10];$/;"	v
@@ -122,7 +126,7 @@ history	final.php	/^$history = getHistoryOfPrevTwoSem($this_sem, $ldap);$/;"	v
 hit_count	index.php	/^$hit_count = (int)file_get_contents('count.txt');$/;"	v
 href	html2text.php	/^			$href = preg_replace("\/^\\.\\.\\\/\/u",'',$href);$/;"	v
 href	html2text.php	/^	if( $element->hasAttribute('href') && ( $href = html2text_resolve($element->getAttribute('href'),$element) ) ) {$/;"	v
-html	edit_animal.php	/^    $html = "<h3>Changing animal cage ...<\/h3>";$/;"	v
+html	edit_animal.php	/^    $html = "<h3>Changing animal cage<h3>";$/;"	v
 html	edit_animal.php	/^    $html = "<table id=\\"table_input1\\">";$/;"	v
 html	methods.php	/^        $html = "<select name=\\"animal_strain\\" required > $/;"	v
 html	methods.php	/^        $html = "<select name=\\"animal_strain\\" required>"; $/;"	v
@@ -167,9 +171,12 @@ ldap	final.php	/^$ldap = $_SESSION['ldap'];$/;"	v
 ldap	login.php	/^$ldap = $_POST['username'];$/;"	v
 listOfStrain	methods.php	/^    $listOfStrain = $_SESSION['conf']['animal']['strain'];$/;"	v
 lname	ldap.php	/^        $lname = $info[$i]["sn"][0];$/;"	v
+logfile	logger.php	/^        $logfile = $_SESSION['conf']['global']['log_file'];$/;"	v
+logfile	logger.php	/^        $logfile = '__jinawar__.log';$/;"	v
 loginForm	tables.php	/^function loginForm()$/;"	f
 main	db/init_db.py	/^def main( ):$/;"	f
 msg	final.php	/^$msg = "<html> <body>";$/;"	v
+msg	logger.php	/^    $msg = '[' . $type . ']' . ' : ' . $timestamp . ' ' .  $message . PHP_EOL;$/;"	v
 msg	mail.php	/^	$msg = html2text($msg);$/;"	v
 name	ldap.php	/^        $name = $info[$i]["givenname"][0];$/;"	v
 name	print.php	/^	$name = $course['name'];$/;"	v
@@ -265,9 +272,10 @@ text	methods.php	/^        $text = $anim['id'] . ' ' . $anim['name'];$/;"	v
 third	print.php	/^	$third = getCourseNameFaculty($preferences['preference3'], $this_sem);$/;"	v
 this_sem	final.php	/^$this_sem = $_SESSION['sem'];$/;"	v
 this_sem	history.php	/^$this_sem = $_SESSION['sem'];$/;"	v
+timestamp	logger.php	/^    $timestamp = date(DATE_RFC2822);$/;"	v
 to	mail.php	/^	$to = $ldap."@iitb.ac.in";$/;"	v
 type	insert_animal.php	/^    <td> <?php echo cageIdsToHtml( $type = "breeder" ); ?> <\/td>$/;"	v
-type	methods.php	/^function cageIdsToHtml( $type = "breeder", $default = NULL )$/;"	v
+type	logger.php	/^function __log__( $message, $type = "INFO" )$/;"	v
 type	sqlite.php	/^function getListOfCages( $type = NULL )$/;"	v
 uid	ldap.php	/^        $uid = $info[$i]["uid"][0];$/;"	v
 update	edit_animal_action.php	/^function update( $what, $value, $animal_id )$/;"	f

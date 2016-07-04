@@ -3,71 +3,51 @@
 include_once( "is_valid_access.php" );
 include_once( "methods.php" );
 
+$animals = getAnimalList( );
+$animalDataList = animalsToDataList( $animals );
+
 // List of taks a user can do.
 ?>
 
- <table id="table_input">
-  <tr>
-    <td>Insert a new cage</td>
+ <table id="table_action">
+  <tr align="center">
     <td> 
         <form method="post" action="insert_cage.php">
-            <input type="submit" name="response" value="Insert Cage" >
+            <input type="submit" name="response" value="Insert new cage" >
         </form>
     </td>
-  </tr>
-   <tr>
-    <td>Insert a new animal</td>
     <td> 
         <form method="post" action="insert_animal.php">
-            <input type="submit" name="response" value="Insert Animal" >
+            <input type="submit" name="response" value="Insert new animal" >
         </form>
     </td>
-  </tr>
+    </tr>
 </table>
 <br />
 
 <form method="post" action="user_show_animal_info.php" id="form_show_animnal">
-<table id="table_input">
-  <tr>
-    <td valign="top">
-            <?php $animals = getAnimalList( ); 
-                echo animalsToDataList( $animals );
-            ?> Animal 
-            <input list="animal_list" name="animal_id" required >
-    </td>
-    <td>
-        <input type="submit"  name="response" value="Show current status" >
-        <br>
-        <input type="submit"  name="response" value="Show hisotry" >
-    </td>
-  </tr>
-</table> 
 </form>
 
-<br />
-
-<form method="post" action="edit_animal.php" id="form_edit_animnal">
-<table id="table_input">
+<form method="post" action="edit_animal.php" id="form_edit_animal">
+<table id="table_action">
   <tr>
-    <td valign="top">
-            <?php $animals = getAnimalList( ); 
-                echo animalsToDataList( $animals );
-            ?> Animal 
-            <input list="animal_list" name="animal_id" required >
+    <td valign="top"> <?php echo $animalDataList; ?> 
+        <input list="animal_list" name="animal_id"  placeholder="Pick an animal" required>
     </td>
     <td>
-        <input type="submit"  name="response" value="Assign/Change cage" >
-        <br>
-        <input type="submit"  name="response" value="Update health" >
-        <br>
-        <input type="submit"  name="response" value="Record genotype" >
+        <select name="response">
+            <option disable selected value>Pick a task </option>
+            <option value="Assign/Change cage">Assign/Change cage</option>
+            <option value="Update Health">Update Health</option>
+            <option value="Record Genotype">Record Genotype</option>
+        </select>
+        <input type="submit" name="edit_animal" id="" value="Submit" />
     </td>
-    
-  </tr>
 </table> 
 </form>
 
 <form method="post" action="index.php">
+
 <input class="logout" type="submit" name="submit" value="Log Out">
 <?php unset($_SESSION); ?>
 </form>

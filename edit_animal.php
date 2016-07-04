@@ -4,12 +4,15 @@ include_once( 'is_valid_access.php' );
 include_once( 'sqlite.php' );
 include_once( 'error.php' );
 include_once( 'header.php' );
+include_once( 'tables.php' );
 
-/* If there is not animal then go back */
+$cages = getListOfCages( );
 
 function change( $animal, $what )
 {
-    $html = "<h3>Changing animal cage ...</h3>";
+    global $cages;
+    $html = "<h3>Changing animal cage<h3>";
+    $html .= "<p class=\"info\"> Old value of $what is already selected </p>";
 
     if( $what == "cage" )
         $oldval = __get__( $animal, 'current_cage_id', 'Unknown' );
@@ -18,12 +21,11 @@ function change( $animal, $what )
     else
         $oldval = 'Unassigned';
 
-    $html .= "Old $what <font color=\"blue\">" .  $oldval . "</font><br>";
-    $html .= "<table id=\"table_input1\">";
+    $html .= "<table id=\"table_action\">";
     $html .= "<tr><td> New $what </td>";
 
     if( $what == "cage" )
-        $html .= "<td>" . cageIdsToHtml( NULL ) . "</td>";
+        $html .= "<td>" . cagesToHtml( $cages, $default = $oldval ) . "</td>";
 
     if( $what == "strain" )
         $html .= "<td>" . strainsToHtml( ) . "</td>";
@@ -80,57 +82,31 @@ if( $_POST && $_POST[ 'animal_id']  )
 
 <h3> Editing/Updating animal </h3>
 
-<table  id = "table_input" >
-<tr>
-    <td>ID of the animal </td>
-    <td> <?php echo $_POST['animal_id']; ?> </td>
-</tr>
-<tr>
-    <td>Name of the animal <br> </td>
-    <td> <?php echo $animal['name']; ?> </td>
-</tr>
-<tr>
-    <td>Date of birth <br> <small> YYYY-MM-DD </small> </td>
-    <td> <?php echo $animal['dob'] ?> </td>
-</tr>
-<tr>
-    <td>Gender</td>
-    <td> <?php echo $animal['gender']; ?> </td>
-</tr>
-<tr>
-    <td>Strain </td>
-    <td> <?php echo $animal['strain'] ?> </td>
-</tr>
-<tr>
-    <td>Parent cage ID<br><small>Animal was born in this cage</small></td> 
-    <td> <?php echo $animal['parent_cage_id'] ?: "UNKNOWN"; ?> </td>
-</tr>
-<tr>
-</table>
-
 <?php
+    echo animalToHTMLTable( $_POST['animal_id'], $show_genotype = false );
 ?>
+
 
 <!-- Here is default form which sends to edit_animal_action.php file -->
 <form method="post" action="edit_animal_action.php">
 
 <?php
 
-    switch( trim($_POST['response']) )
+    switch( strtolower( trim($_POST['response']) ) )
     {
 
-    case "Assign/Change cage":
+        // Everything is turned into lower case
+    case "assign/change cage":
         echo change( $animal, "cage" );
         break;
 
-    case "Record genotype":
+    case "record genotype":
         echo change( $animal, "strain" );
         break;
 
-    case "Update health":
+    case "update health":
         echo "<h3>Updating health .. </h3>";
-        echo "<p> No field is neccessary. But it is expected that you'll 
-            update something </p>";
+        echo "<p class=\"info\"> Old values have been selected</p>";
         echo updateHealth( $animal['id'] );
         break;
 

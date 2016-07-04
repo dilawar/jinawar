@@ -1,6 +1,8 @@
 <?php 
-include_once("sqlite.php");
-include('error.php');
+
+include_once('sqlite.php');
+include_once('error.php');
+include_once( 'logger.php' );
 
 date_default_timezone_set('Asia/Kolkata');
 
@@ -29,7 +31,7 @@ function strainsToHtml( $selected_strain = NULL )
     return $html;
 }
 
-function cageIdsToHtml( $type = "breeder", $default = NULL )
+function cagesToHtml( $cages, $default = NULL )
 {
     if( ! $default )
         $html = "<select name=\"cage_id\"> 
@@ -38,11 +40,15 @@ function cageIdsToHtml( $type = "breeder", $default = NULL )
     else
         $html = "<select name=\"cage_id\">";
 
-    $cages = getListOfCages( $type );
     foreach( $cages as $cage )
     {
-        $html .= '<option value="'.$cage['id'].'">' . $cage['id'] . 
-           " (" . $cage['type'] . ")" . '</option>';
+        if( $default == $cage['id'] )
+            $selected = 'selected';
+        else 
+            $selected = '';
+
+        $html .= '<option value="'.$cage['id']. '" ' . $selected . ' >' 
+            . $cage['id'] .  " (" . $cage['type'] . ")" . '</option>';
     }
     $html .= "</select>";
     return $html;
