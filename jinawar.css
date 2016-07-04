@@ -2,23 +2,40 @@ h3 { width : 500px;
     text-align:justify;
 }
 
+div.action { width : 500px;
+    background-color: lightyellow;
+    /*border : dotted;*/
+    border-width: 1px;
+    padding-bottom: 20px;
+}
+
+
 div { width : 500px }
 
-#table_output_big {text-align : left; background-color:#FFFBBB; width : 500px;}
-#table_output {text-align : left; background-color:#FFFBBB; width : 500px; }
+hr { 
+    width : 500px;
+}
+
+a {
+    width : 500px;
+}
+
+
+#table_output_big {text-align : left; background-color:lightyellow; width : 500px;}
+#table_output {text-align : left; background-color:lightyellow; width : 500px; }
 #table_output td.disp { border-width:1px}
 #table_output td:first-child { text-align : right}
 #table_output td:first-child + td { font : blue };
 
-#table_input1 {text-align : left; background-color:#FFFBBB; width : 400px; }
+#table_input1 {text-align : left; background-color:lightyellow; width : 400px; }
 
-#table_input {text-align : left; background-color:#FFFBBB; width : 500px; 
+#table_input {text-align : left; background-color:lightyellow; width : 500px; 
     border-width: 1px;
 }
 
 #table_action {
-    text-align : center; 
-    background-color:#FFFBBB; 
+    text-align : left; 
+    /*background-color:lightyellow; */
     width : 500px; 
     border-width: 1px;
 }
@@ -28,16 +45,11 @@ div { width : 500px }
 }
 
 table.ta {
-    text-align : left; background-color:#FFFBBB; width : 500px; 
+    text-align : left; background-color:lightyellow; width : 500px; 
 }
 
 table.feedback {
     border-width:1px;
-}
-
-#table_login 
-{   text-align : left; background-color:#FFFBBB; width : 350px; 
-    position:relative; left : 150px;
 }
 
 tr.border 
@@ -85,45 +97,62 @@ th.feedback_title
 table.faculty_job
 {   
     border-width:1px;
-    text-align : left; background-color:#FFFBBB; width : 450px; 
+    text-align : left; background-color:lightyellow; width : 450px; 
     position:relative; left : 50px;
 
 }
 
 table.history
 {   
-    text-align : left; background-color:#FFFBBB; width : 400px; 
+    text-align : left; background-color:lightyellow; width : 400px; 
     position:relative; left : 50px;
 }
 
 #table_login_main
-{   text-align : left;
-    background-color:#FFFBBB; 
+{   
+    text-align : left;
+    background-color:lightyellow; 
     width : 200px; 
     left : 300px;
     position:fixed; 
 }
 
 #table_login_temp
-{   text-align : right; background-color:#FFFBBB; width : 250px; 
+{   text-align : right; background-color:lightyellow; width : 250px; 
     position: relative; 
     top : -240px;
     right : 250px;
+}
+
+table.summary {
+    text-align:left;
+    font-size:12px;
+    width: 150px;
+    /*background-color:lightyellow;*/
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+table.summary td {
+    /*border : dotted ;*/
+    border-width: 1px;
+    /*background-color:lightyellow;*/
 }
 
 table.info {
     text-align:left;
     font-size:12px;
     width: 500px;
-    /*background-color:#FFFBBB;*/
+    /*background-color:lightyellow;*/
     padding-left: 50px;
     padding-right: 50px;
 }
 
+
 table.info td {
     border : dotted ;
     border-width: 1px;
-    background-color:#FFFBBB;
+    background-color:lightyellow;
 }
 
 table.info td:first-child + td { 
@@ -143,9 +172,10 @@ table.info td:first-child + td {
     font-style:normal;
 }
 
-#input1 { border-style: none; width:auto; background-color:'#FFFBBB'}
-#input2 { border-style: none; width:175px; background-color:'#FFFBBB'}
-#input_login { margin-left : 400px; font-size:11px;
+#input1 { border-style: none; width:auto; background-color:'lightyellow'}
+#input2 { border-style: none; width:175px; background-color:'lightyellow'}
+#input_login { 
+    margin-left : 400px; font-size:11px;
     position:relative;
     top : -10px;
 }
@@ -228,7 +258,34 @@ input.req_password {
 }
 
 
-p {width : 500px; text-align:justify; font-size:12px }
+p.info {
+    width : 500px; 
+    text-align:justify; 
+    font-size:14px;
+    background-color:lightyellow;
+}
+
+p.warn {
+    width : 500px; 
+    text-align:justify; 
+    font-size:14px;
+    background-color:lightyellow;
+}
+
+
+p.action {
+    width : 500px; 
+    text-align:justify; 
+    font-size:14px;
+    background-color:lightyellow;
+}
+
+
+p {
+    width : 500px; text-align:justify; font-size:14px 
+    padding-left : 2px;
+    padding-right: 2px;
+}
 
 p.right {width : 500px; text-align:right ; font-size:13px}
 

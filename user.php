@@ -9,6 +9,9 @@ $animalDataList = animalsToDataList( $animals );
 // List of taks a user can do.
 ?>
 
+<div class="action">
+<p>Here you can insert a new animal or a new cage.  </p>
+
  <table id="table_action">
   <tr align="center">
     <td> 
@@ -23,7 +26,13 @@ $animalDataList = animalsToDataList( $animals );
     </td>
     </tr>
 </table>
-<br />
+</div>
+
+
+<div class="action">
+
+<p> Once an animal is inserted, you can update verious other paramters related
+to its genotype, health and cage.  </p>
 
 <form method="post" action="user_show_animal_info.php" id="form_show_animnal">
 </form>
@@ -45,9 +54,30 @@ $animalDataList = animalsToDataList( $animals );
     </td>
 </table> 
 </form>
+</div>
+
+
+<div class="action">
+<p> Here you can see information about an animal. </p>
+
+<form method="post" action="user_show_animal_info.php" id="form_show_animal">
+<table id="table_action">
+  <tr>
+    <td valign="top"> <?php echo $animalDataList; ?> 
+        <input list="animal_list" name="animal_id"  placeholder="Pick an animal" required>
+    </td>
+    <td>
+        <select name="response">
+            <option disable selected value>Pick a task </option>
+            <option value="Show information">Show information</option>
+        </select>
+        <input type="submit" name="show_animal" id="" value="Submit" />
+    </td>
+</table> 
+</form>
+</div>
 
 <form method="post" action="index.php">
-
 <input class="logout" type="submit" name="submit" value="Log Out">
 <?php unset($_SESSION); ?>
 </form>

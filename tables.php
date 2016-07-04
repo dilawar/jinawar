@@ -1,5 +1,6 @@
 <?php 
 
+include_once 'is_valid_access.php';
 include_once 'sqlite.php';
 
 function loginForm()
@@ -13,7 +14,7 @@ function loginForm()
   $table .= '<tr><td><input type="text" name="username" id="username" /> </td></tr>';
   $table .= '<tr><td><small>NCBS Password</small></td></tr>';
   $table .= '<tr><td> <input type="password"  name="pass" id="pass"> </td></tr>';
-  $table .= '<tr><td> <input position="relative" type="submit" name="response" value="Login" /> </td></tr>';
+  $table .= '<tr><td> <input style="float: right" type="submit" name="response" value="Login" /> </td></tr>';
   $table .= '</table>';
   $table .= '</form>';
   return $table;

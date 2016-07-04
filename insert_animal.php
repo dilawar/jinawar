@@ -1,6 +1,8 @@
 <?php
 include_once( 'is_valid_access.php' );
 include_once( 'methods.php' );
+
+$breederCages = getListOfCages( "breeder" );
 ?>
 
 <h3> Inserting a new animal </h3>
@@ -33,7 +35,7 @@ on <strong>Edit/Update animal</strong> page </p>
 
 <tr>
     <td>Parent cage ID*<br><small>Animal was born in this cage</small></td> 
-    <td> <?php echo cageIdsToHtml( $type = "breeder" ); ?> </td>
+    <td> <?php echo cagesToHtml( $breederCages ); ?> </td>
 </tr>
 
 <tr>

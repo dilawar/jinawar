@@ -61,7 +61,7 @@ function getAnimalList( )
 {
     $dbname = $_SESSION['db_unmutable'];
     $conn = sqlite_open( $dbname ) or die( "Could not open $dbname" );
-    $response = $conn->query( 'SELECT id, name FROM animals' );
+    $response = $conn->query( "SELECT id, name FROM animals WHERE status='alive'" );
     $result = Array();
     $i = 0;
     while( $arr = $response->fetchArray( SQLITE3_BOTH ) )
@@ -106,16 +106,16 @@ function getListOfCages( $type = NULL )
 
 function summaryTable( )
 {
-    $html = "<table id=\"table_info\" style=\"float: left\">";
+    $html = "<table class=\"summary\" style=\"float: left\">";
     $animals = getAnimalList( );
     $breederCages = getListOfCages( "breeder" );
     $cages = getListOfCages( );
     $numAnimals = sizeof( $breederCages );
     $numCages = sizeof( $cages );
     $numBreederCages = sizeof( $breederCages );
-    $html .= "<tr> <td>No of animals </td><td> $numAnimals </td> </tr>";
-    $html .= "<tr> <td>No of all cages </td><td> $numCages </td> </tr>";
-    $html .= "<tr> <td>No of breeder cages </td><td> $numBreederCages </td> </tr>";
+    $html .= "<tr> <td>Alive animals </td><td> $numAnimals </td> </tr>";
+    $html .= "<tr> <td>Total cages </td><td> $numCages </td> </tr>";
+    $html .= "<tr> <td>Breeder cages </td><td> $numBreederCages </td> </tr>";
     $html .= "</table>";
     return $html;
 }

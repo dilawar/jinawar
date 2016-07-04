@@ -1,7 +1,6 @@
 <?php 
 
-include( 'header.php' );
-include('methods.php');
+include 'is_valid_access.php';
 
 $conf = $_SESSION['conf'];
 $ldap = $_POST['username'];
@@ -18,7 +17,7 @@ if(!$conn)
 }
 else 
 {
-    echo "<p> Login successful </p>";
+    echo printInfo( "Login successful" );
     imap_close( $conn );
     $_SESSION['AUTHENTICATED'] = TRUE;
     goToPage( "user.php", 0 );

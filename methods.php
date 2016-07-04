@@ -103,7 +103,10 @@ function goToPage($page="index.php", $delay = 3)
 
 function goBackToPageLink( $url )
 {
-    $html = "<a href=\"$url\"><font color=\"blue\">Go back</font></a>";
+    $html = "<br />";
+    $html .= "<a style=\"float: right\" href=\"$url\">
+            <font color=\"blue\" size=\"5\">Go Back</font>
+        </a>";
     return $html;
 }
 

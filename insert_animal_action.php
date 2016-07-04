@@ -13,7 +13,7 @@ function insert_animal( $vars )
     $res = $conn->query( 'SELECT * FROM animals WHERE id="' . $vars['animal_id'] . '"');
     if( $res->fetchArray( ) )
     {
-        echo printWarning("Aninal with id " . $vars['animal_id'] . " already exists. 
+        echo printInfo("Aninal with id " . $vars['animal_id'] . " already exists. 
             Will do nothing." );
         return false;
     }
@@ -33,7 +33,17 @@ function insert_animal( $vars )
 
     //TODO: Image image insertion. Not to database but to filesystem.
     $result = $stmt->execute( );
+
+    // create an entry in log and current_status.
+    $stmt = $conn->prepare( 'INSERT OR IGNORE INTO current_status SET id=:id ' );
+    $stmt->bindValue( ':id', $vars['animal_id'], SQLITE3_TEXT );
+    $stmt->execute( );
+
+    $stmt = $conn->prepare( 'INSERT OR IGNORE INTO genotype SET id=:id ' );
+    $stmt->bindValue( ':id', $vars['animal_id'], SQLITE3_TEXT );
+    $stmt->execute( );
     
+    $conn->close( );
     return $result;
 };
 
@@ -41,9 +51,9 @@ $res = insert_animal( $_POST );
 
 if( ! $res )
 {
-    echo printWarning( "Failed to insert animal " . $_POST['animal_id'] );
-    echo( implode($_POST) );
-    echo '<a href="'. $_SESSION['conf']['global']['base_url'] . '/insert_animal.php">Go back</a>';
+    echo printWarning( "Failed to insert animal with id " . $_POST['animal_id'] );
+    echo( "Animal details : " . implode(" ", $_POST) . PHP_EOL );
+    echo goBackToPageLink( "user.php" );
 }
 else
 {
