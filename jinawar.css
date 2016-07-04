@@ -113,15 +113,24 @@ table.history
 
 table.info {
     text-align:left;
-    /*bottom : 185px;*/
     font-size:12px;
-    width: 400px;
+    width: 500px;
+    /*background-color:#FFFBBB;*/
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+table.info td {
+    border : dotted ;
+    border-width: 1px;
     background-color:#FFFBBB;
 }
+
 table.info td:first-child + td { 
     font-weight: bold;
-    width: 150px;
-};
+    text-align : right;
+    width: 250px;
+}
 
 
 #table_server {

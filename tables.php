@@ -24,7 +24,7 @@ function animalToHTMLTable( $animal_id, $show_genotype = true, $show_health = tr
     $animal = getAnimalWithId( $animal_id );
     __log__( 'Showing animal ' . implode( ',', $animal ) );
     $html = '';
-    $html .= "<table border=\"0\" class=\"info\" id=\"table_animal_info_basic\">
+    $html .= "<table class=\"info\" >
         <tr> <td>Animal Id</td>";
     $html .=  "<td>" . $animal['id'] . "</td>   
             </tr> <tr> <td >Name</td> <td>" . $animal['name'] . " </td> </tr>";
@@ -37,15 +37,16 @@ function animalToHTMLTable( $animal_id, $show_genotype = true, $show_health = tr
              . " </td> </tr>";
     $html .= "<tr> <td>Date of birth</td> <td> " 
             .  $animal['dob'] . " </td> </tr>";
-    $html .= "<tr> <td>Age</td> <td> " . ageInDays( $animal['dob'] ) . " ( " .  
-        $animal['status'] . " ) " . " </td> </tr> ";
+    $html .= "<tr> <td>Age</td> <td> " . ageInDays( $animal['dob'] ) 
+        . " <font color=\"blue\"> " .  
+        strtoupper($animal['status']) . " </font> " . " </td> </tr> ";
 
     $html .=  "<tr> <td>Born in cage with ID</td><td> " 
         . $animal['parent_cage_id'] . " </td> </tr> ";
     $html .= "</table> <br />";
     if( $show_genotype )
     {
-        $html .= " <table border=\"0\" class=\"info\" id=\"table_animal_info_genotype\">";
+        $html .= " <table  class=\"info\">";
         $html .= "<tr> <td>Is transgenic</td> <td> " .  
                 $animal['is_transgenic'] . " </td> </tr>";
         $html .= "<tr> <td>Genotype done on</td> <td> " .
@@ -57,7 +58,7 @@ function animalToHTMLTable( $animal_id, $show_genotype = true, $show_health = tr
 
     if( $show_health )
     {
-        $html .= "<table class=\"info\" id=\"table_animal_info_health\">";
+        $html .= "<table class=\"info\" >";
         $html .= "<tr> <td>Weight</td> <td> " . $animal['weight'] . "gm </td> </tr>";
         $html .= "<tr> <td>Length</td> <td> " .  $animal['length'] . " mm</td> </tr> <tr>";
         $html .= " <td>Height</td> <td> " .  $animal['height'] . " mm</td> </tr>";
@@ -74,8 +75,8 @@ function animalToHTMLTable( $animal_id, $show_genotype = true, $show_health = tr
         }
         $html .= "</table> <br />";
 
-        $html .= "<table  class=\"info\" id=\"table_animal_info_log\">";
-        $html .= "<tr> TODO: Write log </tr> </table>";
+        //$html .= "<table  class=\"info\" >";
+        //$html .= "<tr> TODO: Write log </tr> </table>";
     }
 
     return $html;

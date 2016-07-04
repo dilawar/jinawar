@@ -39,7 +39,7 @@ function updateHealth( $animal_id )
 {
     $health = getHealth( $animal_id );
 
-    $html = "<table id=\"table_input1\">";
+    $html = "<table id=\"table_action\">";
     $html .= ' <tr> 
             <td>Length</td> 
             <td> <input type="number" name="length" value="' . $health['length']. '">mm</input>
